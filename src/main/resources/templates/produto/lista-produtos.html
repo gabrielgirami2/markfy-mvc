@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <head th:replace="~{base :: head}"></head>
+    <style>
+        .content {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            margin-left: 280px;
+            padding: 20px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .content-header h1 {
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #452a5e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            min-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        thead tr {
+            background-color: #563d7c;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:last-of-type {
+            border-bottom: 2px solid #563d7c;
+        }
+
+        .modal {
+            display: none; /* Ocultar o modal por padrão */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #452a5e;
+        }
+
+        /* Botões de ação na tabela */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btns button {
+            background: none;
+            border: none;
+            color: #563d7c;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .action-btns button:hover {
+            background-color: #452a5e;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{base :: menu(page='produtos')}"></div>
+<div class="content">
+    <div class="content-header">
+        <h1>Lista de Produtos</h1>
+        <a href="#" class="btn" id="openModalBtn">Cadastrar Produto</a>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Marca</th>
+            <th>Tamanho</th>
+            <th>Estoque</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.nome}">Nome do Produto</td>
+            <td th:text="${produto.marca}">Marca do Produto</td>
+            <td th:text="${produto.tamanho}">Tamanho do Produto</td>
+            <td th:text="${produto.estoque}">Estoque</td>
+            <td th:text="${produto.valor}">Valor</td>
+            <td class="action-btns">
+                <button class="btn edit-btn"
+                        th:attr="data-id=${produto.idProduto},
+                             data-nome=${produto.nome},
+                             data-marca=${produto.marca},
+                             data-tamanho=${produto.tamanho},
+                             data-estoque=${produto.estoque},
+                             data-valor=${produto.valor}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn delete-btn" th:attr="data-id=${produto.idProduto}">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeProductModal">&times;</span>
+        <h2>Cadastrar Produto</h2>
+        <form th:object="${cadastroProdutoDTO}" id="productForm" action="/produto/cadastrar" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input th:field="*{nomeProduto}" type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor:</label>
+                <input th:field="*{valorProduto}" type="number" id="valor" name="valor" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input th:field="*{marcaProduto}" type="text" id="marca" name="marca" required>
+            </div>
+            <div class="form-group">
+                <label for="tamanho">Tamanho:</label>
+                <select th:field="*{tamanhoProduto}" id="tamanho" name="tamanho" required>
+                    <option value="PP">PP</option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                    <option value="XG">XG</option>
+                    <option value="XGG">XGG</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="estoque">Estoque:</label>
+                <input th:field="*{estoque}" type="number" id="estoque" name="estoque" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeEditModal">&times;</span>
+        <h2>Editar Produto</h2>
+        <form th:object="${alterarProdutoDTO}" id="editProductForm" action="#" method="post">
+            <div class="form-group">
+                <label for="editNome">Nome:</label>
+                <input th:field="*{nomeProduto}" type="text" id="editNome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="editValor">Valor:</label>
+                <input th:field="*{valorProduto}" type="number" id="editValor" name="valor" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="editMarca">Marca:</label>
+                <input th:field="*{marcaProduto}" type="text" id="editMarca" name="marca" required>
+            </div>
+            <div class="form-group">
+                <label for="editTamanho">Tamanho:</label>
+                <select th:field="*{tamanhoProduto}" id="editTamanho" name="tamanho" required>
+                    <option value="PP">PP</option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                    <option value="XG">XG</option>
+                    <option value="XGG">XGG</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editEstoque">Estoque:</label>
+                <input th:field="*{estoque}" type="number" id="editEstoque" name="estoque" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar Alterações">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeDeleteModal">&times;</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza de que deseja excluir este produto?</p>
+        <form id="deleteProductForm" action="#" method="post">
+            <input type="hidden" id="deleteProductId" name="id">
+            <div class="form-group">
+                <input type="submit" value="Excluir" class="btn">
+            </div>
+        </form>
+        <button id="cancelDelete" class="btn">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    var productModal = document.getElementById("productModal");
+    var editModal = document.getElementById("editModal");
+    var deleteModal = document.getElementById("deleteModal");
+
+    var openProductModalBtn = document.getElementById("openModalBtn");
+    var closeProductModalBtn = document.getElementById("closeProductModal");
+    var closeEditModalBtn = document.getElementById("closeEditModal");
+    var closeDeleteModalBtn = document.getElementById("closeDeleteModal");
+
+    var editProductForm = document.getElementById("editProductForm");
+    var deleteProductForm = document.getElementById("deleteProductForm");
+
+    var cancelDeleteBtn = document.getElementById("cancelDelete");
+
+    openProductModalBtn.onclick = function() {
+        productModal.style.display = "block";
+    }
+
+    closeProductModalBtn.onclick = function() {
+        productModal.style.display = "none";
+    }
+
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.onclick = function() {
+            const id = this.getAttribute('data-id');
+            const nome = this.getAttribute('data-nome');
+            console.log(nome);
+            const marca = this.getAttribute('data-marca');
+            const tamanho = this.getAttribute('data-tamanho');
+            const estoque = this.getAttribute('data-estoque');
+            const valor = this.getAttribute('data-valor');
+
+            document.getElementById('editNome').value = nome;
+            document.getElementById('editMarca').value = marca;
+            document.getElementById('editTamanho').value = tamanho;
+            document.getElementById('editEstoque').value = estoque;
+            document.getElementById('editValor').value = valor;
+
+            editProductForm.action = `/produto/editar/${id}`;
+            editModal.style.display = "block";
+        }
+    });
+
+    closeEditModalBtn.onclick = function() {
+        editModal.style.display = "none";
+    }
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.onclick = function() {
+            const id = this.getAttribute('data-id');
+            document.getElementById('deleteProductId').value = id;
+            deleteProductForm.action = `/produto/deletar/${id}`
+            deleteModal.style.display = "block";
+        }
+    });
+
+    closeDeleteModalBtn.onclick = function() {
+        deleteModal.style.display = "none";
+    }
+
+    cancelDeleteBtn.onclick = function() {
+        deleteModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target === productModal) {
+            productModal.style.display = "none";
+        } else if (event.target === editModal) {
+            editModal.style.display = "none";
+        } else if (event.target === deleteModal) {
+            deleteModal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

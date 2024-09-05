@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markfy - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #c1c7c3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .login-container {
+            display: flex;
+            height: 80%;
+            width: 80%;
+            max-width: 1200px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .login-sidebar {
+            flex: 1;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-shadow: inset -5px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-sidebar h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .login-sidebar p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            flex: 2;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .login-form label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-form input[type="submit"]:hover {
+            background-color: #4a2c5a;
+        }
+
+        .login-form a {
+            color: #563d7c;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .login-form a:hover {
+            text-decoration: underline;
+        }
+
+        .create-account {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .create-account a {
+            color: #563d7c;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+
+         .cadasto_btn{
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="login-sidebar">
+        <h1>Markfy</h1>
+        <p>Bem-vindo de volta</p>
+        <hr style="width: 70%;">
+        <div class="create-account">
+            <p>Ainda não tem uma conta?</p>
+            <a href="/usuario/cadastro"><button class="cadasto_btn" >Cadastre-se no Markfy</button></a>
+        </div>
+    </div>
+    <div class="login-form">
+        <h2>Login</h2>
+        <form th:object="${usuarioLoginDTO}" action="/usuario/entrar" method="post">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input th:field="*{email}" type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input th:field="*{senha}" type="password" id="senha" name="password" required>
+            </div>
+            <input type="submit" value="Entrar">
+            <a href="#">Esqueceu a senha?</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

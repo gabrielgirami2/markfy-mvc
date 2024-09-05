@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markfy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 280px;
+            background-color: #000;
+            color: #fff;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 50px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #fff;
+            width: 80%;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .sidebar a:hover {
+            background-color: #333;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar .logout {
+            margin-top: auto;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a.active {
+            background-color: #333;
+        }
+
+        .sidebar a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background-color: #563d7c;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="menu" class="sidebar">
+    <h2 class="logo">Markfy</h2>
+    <a th:classappend="${page == 'home'} ? 'active'" href="/home" ><i class="fas fa-home"></i>Home</a>
+    <a th:classappend="${page == 'clientes'} ? 'active'" href="#"><i class="fas fa-users"></i>Clientes</a>
+    <a th:classappend="${page == 'produtos'} ? 'active'" href="/produto"><i class="fas fa-box"></i>Produtos</a>
+    <a th:classappend="${page == 'analises'} ? 'active'" href="#"><i class="fas fa-chart-line"></i>Análises</a>
+    <a th:classappend="${page == 'minha_loja'} ? 'active'" href="#"><i class="fas fa-store"></i>Minha Loja</a>
+    <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i>Sair</a>
+</div>
+</body>
+</html>
