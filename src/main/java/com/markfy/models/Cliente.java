@@ -1,5 +1,7 @@
 package com.markfy.models;
 
+import com.markfy.dto.cliente.AlterarClienteDTO;
+import com.markfy.dto.cliente.CadastroClienteDTO;
 import com.markfy.models.enums.EstadoCivilEnum;
 import com.markfy.models.enums.NivelEducacionalEnum;
 import com.markfy.models.enums.OcupacaoEnum;
@@ -30,4 +32,31 @@ public class Cliente {
     private OcupacaoEnum ocupacao;
     @ManyToOne
     private Loja loja;
+
+    public Cliente(CadastroClienteDTO cadastroClienteDTO, Loja loja) {
+        this.nomeCliente = cadastroClienteDTO.nomeCliente();
+        this.sobrenomeCliente = cadastroClienteDTO.sobrenomeCliente();
+        this.dataDeNasciemto = cadastroClienteDTO.dataDeNasciemto();
+        this.emailCliente = cadastroClienteDTO.emailCliente();
+        this.sexo = cadastroClienteDTO.sexo();
+        this.cpf = cadastroClienteDTO.cpf();
+        this.estadoCivil = cadastroClienteDTO.estadoCivil();
+        this.nivelEducacional = cadastroClienteDTO.nivelEducacional();
+        this.rendaAnual = cadastroClienteDTO.rendaAnual();
+        this.ocupacao = cadastroClienteDTO.ocupacao();
+        this.loja = loja;
+    }
+
+    public void alterar(AlterarClienteDTO alterarClienteDTO) {
+        if(alterarClienteDTO.nomeCliente() != null ) this.nomeCliente = alterarClienteDTO.nomeCliente();
+        if(alterarClienteDTO.sobrenomeCliente() != null ) this.sobrenomeCliente = alterarClienteDTO.sobrenomeCliente();
+        if(alterarClienteDTO.dataDeNasciemto() != null ) this.dataDeNasciemto = alterarClienteDTO.dataDeNasciemto();
+        if(alterarClienteDTO.emailCliente() != null ) this.emailCliente = alterarClienteDTO.emailCliente();
+        if(alterarClienteDTO.sexo() != null ) this.sexo = alterarClienteDTO.sexo();
+        if(alterarClienteDTO.cpf() != null ) this.cpf = alterarClienteDTO.cpf();
+        if(alterarClienteDTO.estadoCivil() != null ) this.estadoCivil = alterarClienteDTO.estadoCivil();
+        if(alterarClienteDTO.nivelEducacional() != null ) this.nivelEducacional = alterarClienteDTO.nivelEducacional();
+        if(alterarClienteDTO.rendaAnual() != null ) this.rendaAnual = alterarClienteDTO.rendaAnual();
+        if(alterarClienteDTO.ocupacao() != null ) this.ocupacao = alterarClienteDTO.ocupacao();
+    }
 }

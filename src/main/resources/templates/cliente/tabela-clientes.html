@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <head th:replace="~{base :: head}"></head>
+    <style>
+        .content {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            margin-left: 280px;
+            padding: 20px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .content-header h1 {
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #452a5e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            min-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        thead tr {
+            background-color: #563d7c;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:last-of-type {
+            border-bottom: 2px solid #563d7c;
+        }
+
+        .modal {
+            display: none; /* Ocultar o modal por padrão */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #452a5e;
+        }
+
+        /* Botões de ação na tabela */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btns button {
+            background: none;
+            border: none;
+            color: #563d7c;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .action-btns button:hover {
+            background-color: #452a5e;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{base :: menu(page='clientes')}"></div>
+<div class="content">
+    <div class="content-header">
+        <h1>Lista de Clientes</h1>
+        <a href="#" class="btn" id="openModalBtn">Cadastrar Cliente</a>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>E-mail</th>
+            <th>CPF</th>
+            <th>Data de nascimento</th>
+            <th>Estado civil</th>
+            <th>Sexo</th>
+            <th>Nível educacional</th>
+            <th>Renda (ano)</th>
+            <th>Ocupação</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cliente : ${clientes}">
+            <td th:text="${cliente.nomeCliente}">Nome do cliente</td>
+            <td th:text="${cliente.sobrenomeCliente}">Sobrenome do cliente</td>
+            <td th:text="${cliente.emailCliente}">E-mail</td>
+            <td th:text="${cliente.cpf}">CPF</td>
+            <td th:text="${cliente.dataDeNasciemto}">Data de nascimento</td>
+            <td th:text="${cliente.estadoCivil}">Estado civil</td>
+            <td th:text="${cliente.sexo}">Sexo</td>
+            <td th:text="${cliente.nivelEducacional}">Nivel educacional</td>
+            <td th:text="${cliente.rendaAnual}">Renda (ano)</td>
+            <td th:text="${cliente.ocupacao}">Ocupação</td>
+            <td class="action-btns">
+                <button class="btn edit-btn"
+                        th:attr="data-id=${cliente.idCliente},
+                             data-nome=${cliente.nomeCliente},
+                             data-sobrenome=${cliente.sobrenomeCliente},
+                             data-email=${cliente.emailCliente},
+                             data-cpf=${cliente.cpf},
+                             data-dataDeNasimento=${cliente.dataDeNasciemto},
+                             data-estadoCivil=${cliente.estadoCivil},
+                             data-sexo=${cliente.sexo},
+                             data-nivelEducacional=${cliente.nivelEducacional},
+                             data-rendaAnual=${cliente.rendaAnual},
+                             data-ocupacao=${cliente.ocupacao}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn delete-btn" th:attr="data-id=${cliente.idCliente}">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="clientModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeClientModal">&times;</span>
+        <h2>Cadastrar Cliente</h2>
+        <form th:object="${cadastroClienteDTO}" id="clientForm" action="/cliente/cadastrar" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input th:field="*{nomeCliente}" type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="sobrenome">Sobrenome:</label>
+                <input th:field="*{sobrenomeCliente}" type="text" id="sobrenome" name="sobrenome" required>
+            </div>
+            <div class="form-group">
+                <label for="dataDeNasciemto">Data de nascimento:</label>
+                <input th:field="*{dataDeNasciemto}" type="date" id="dataDeNasciemto" name="dataDeNasciemto" required>
+            </div>
+            <div class="form-group">
+                <label for="emailCliente">E-mail:</label>
+                <input th:field="*{emailCliente}" type="email" id="emailCliente" name="emailCliente" required>
+            </div>
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select th:field="*{sexo}" id="sexo" name="sexo" required>
+                    <option value="*">Selecione:</option>
+                    <option value="MASCULINO">Masculino</option>
+                    <option value="FEMININO">Feminino</option>
+                    <option value="OUTRO">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input th:field="*{cpf}" type="text" id="cpf" name="cpf" required>
+            </div>
+            <div class="form-group">
+                <label for="estadoCivil">Estado civil:</label>
+                <select th:field="*{estadoCivil}" id="estadoCivil" name="estadoCivil" required>
+                    <option value="*">Selecione:</option>
+                    <option value="CASADO">Casado(a)</option>
+                    <option value="SOLTEIRO">Solteiro(a)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nivelEducacional">Nível educacional:</label>
+                <select th:field="*{nivelEducacional}" id="nivelEducacional" name="nivelEducacional" required>
+                    <option value="*">Selecione:</option>
+                    <option value="FUNDAMENTAL">Ensino fundamental</option>
+                    <option value="MEDIO">Ensino médio</option>
+                    <option value="SUPERIOR_GRADUACAO">Graduação</option>
+                    <option value="POS_GRADUACAO">Pós graduação</option>
+                    <option value="MESTRADO">Mestrado</option>
+                    <option value="DOUTORADO">Doutorado</option>
+                    <option value="OUTRO">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rendaAnual">Renda(ano):</label>
+                <input th:field="*{rendaAnual}" type="number" id="rendaAnual" name="rendaAnual" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="ocupacao">Estado civil:</label>
+                <select th:field="*{ocupacao}" id="ocupacao" name="ocupacao" required>
+                    <option value="*">Selecione:</option>
+                    <option value="ESTUDANTE">Estudante</option>
+                    <option value="EMPREGADO">Registrado</option>
+                    <option value="DESEMPREGADO">Sem ocupação</option>
+                    <option value="AUTONOMO">Autonômo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeEditModal">&times;</span>
+        <h2>Editar Produto</h2>
+        <form th:object="${alterarClienteDTO}" id="editClientForm" action="#" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input th:field="*{nomeCliente}" type="text" id="editNome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="sobrenome">Sobrenome:</label>
+                <input th:field="*{sobrenomeCliente}" type="text" id="editSobrenome" name="sobrenome" required>
+            </div>
+            <div class="form-group">
+                <label for="dataDeNasciemto">Data de nascimento:</label>
+                <input th:field="*{dataDeNasciemto}" type="date" id="editDataDeNasciemto" name="dataDeNasciemto" required>
+            </div>
+            <div class="form-group">
+                <label for="emailCliente">E-mail:</label>
+                <input th:field="*{emailCliente}" type="email" id="editEmailCliente" name="emailCliente" required>
+            </div>
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select th:field="*{sexo}" id="editSexo" name="sexo" required>
+                    <option value="*">Selecione:</option>
+                    <option value="MASCULINO">Masculino</option>
+                    <option value="FEMININO">Feminino</option>
+                    <option value="OUTRO">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input th:field="*{cpf}" type="text" id="editCpf" name="cpf" required>
+            </div>
+            <div class="form-group">
+                <label for="estadoCivil">Estado civil:</label>
+                <select th:field="*{estadoCivil}" id="editEstadoCivil" name="estadoCivil" required>
+                    <option value="*">Selecione:</option>
+                    <option value="CASADO">Casado(a)</option>
+                    <option value="SOLTEIRO">Solteiro(a)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nivelEducacional">Nível educacional:</label>
+                <select th:field="*{nivelEducacional}" id="editNivelEducacional" name="nivelEducacional" required>
+                    <option value="*">Selecione:</option>
+                    <option value="FUNDAMENTAL">Ensino fundamental</option>
+                    <option value="MEDIO">Ensino médio</option>
+                    <option value="SUPERIOR_GRADUACAO">Graduação</option>
+                    <option value="POS_GRADUACAO">Pós graduação</option>
+                    <option value="MESTRADO">Mestrado</option>
+                    <option value="DOUTORADO">Doutorado</option>
+                    <option value="OUTRO">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rendaAnual">Renda(ano):</label>
+                <input th:field="*{rendaAnual}" type="number" id="editRendaAnual" name="rendaAnual" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="ocupacao">Estado civil:</label>
+                <select th:field="*{ocupacao}" id="editOcupacao" name="ocupacao" required>
+                    <option value="*">Selecione:</option>
+                    <option value="ESTUDANTE">Estudante</option>
+                    <option value="EMPREGADO">Registrado</option>
+                    <option value="DESEMPREGADO">Sem ocupação</option>
+                    <option value="AUTONOMO">Autonômo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar Alterações">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeDeleteModal">&times;</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza de que deseja excluir este cliente?</p>
+        <form id="deleteClientForm" action="#" method="post">
+            <input type="hidden" id="deleteClientId" name="id">
+            <div class="form-group">
+                <input type="submit" value="Excluir" class="btn">
+            </div>
+        </form>
+        <button id="cancelDelete" class="btn">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    var clientModal = document.getElementById("clientModal");
+    var editModal = document.getElementById("editModal");
+    var deleteModal = document.getElementById("deleteModal");
+
+    var openClientModalBtn = document.getElementById("openModalBtn");
+    var closeClientModalBtn = document.getElementById("closeClientModal");
+    var closeEditModalBtn = document.getElementById("closeEditModal");
+    var closeDeleteModalBtn = document.getElementById("closeDeleteModal");
+
+    var editClientForm = document.getElementById("editClientForm");
+    var deleteClientForm = document.getElementById("deleteClientForm");
+
+    var cancelDeleteBtn = document.getElementById("cancelDelete");
+
+    openClientModalBtn.onclick = function() {
+        clientModal.style.display = "block";
+    }
+
+    closeClientModalBtn.onclick = function() {
+        clientModal.style.display = "none";
+    }
+
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.onclick = function() {
+            const id = this.getAttribute('data-id');
+            const nome = this.getAttribute('data-nome');
+            const sobrenome = this.getAttribute('data-sobrenome');
+            const email = this.getAttribute('data-email');
+            const cpf = this.getAttribute('data-cpf');
+            const dataDeNasimento = this.getAttribute('data-dataDeNasimento');
+            const estadoCivil = this.getAttribute('data-estadoCivil');
+            const sexo = this.getAttribute('data-sexo');
+            const nivelEducacional = this.getAttribute('data-nivelEducacional');
+            const rendaAnual = this.getAttribute('data-rendaAnual');
+            const ocupacao = this.getAttribute('data-ocupacao');
+
+
+
+            document.getElementById('editNome').value = nome;
+            document.getElementById('editSobrenome').value = sobrenome;
+            document.getElementById('editDataDeNasciemto').value = dataDeNasimento;
+            document.getElementById('editEmailCliente').value = email;
+            document.getElementById('editSexo').value = sexo;
+            document.getElementById('editCpf').value = cpf;
+            document.getElementById('editEstadoCivil').value = estadoCivil;
+            document.getElementById('editNivelEducacional').value = nivelEducacional;
+            document.getElementById('editRendaAnual').value = rendaAnual;
+            document.getElementById('editOcupacao').value = ocupacao;
+
+
+            editClientForm.action = `/cliente/editar/${id}`;
+            editModal.style.display = "block";
+        }
+    });
+
+    closeEditModalBtn.onclick = function() {
+        editModal.style.display = "none";
+    }
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.onclick = function() {
+            const id = this.getAttribute('data-id');
+            document.getElementById('deleteClientId').value = id;
+            deleteClientForm.action = `/cliente/deletar/${id}`
+            deleteModal.style.display = "block";
+        }
+    });
+
+    closeDeleteModalBtn.onclick = function() {
+        deleteModal.style.display = "none";
+    }
+
+    cancelDeleteBtn.onclick = function() {
+        deleteModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target === clientModal) {
+            clientModal.style.display = "none";
+        } else if (event.target === editModal) {
+            editModal.style.display = "none";
+        } else if (event.target === deleteModal) {
+            deleteModal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

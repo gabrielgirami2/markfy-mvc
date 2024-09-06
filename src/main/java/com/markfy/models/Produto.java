@@ -1,5 +1,6 @@
 package com.markfy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.markfy.dto.produto.AlterarProdutoDTO;
 import com.markfy.dto.produto.CadastroProdutoDTO;
 import com.markfy.models.enums.TamanhoEnum;
@@ -22,6 +23,7 @@ public class Produto {
     private Integer estoque;
     @ManyToOne
     @JoinColumn(name = "loja_id")
+    @JsonIgnore
     private Loja loja;
 
     public Produto(CadastroProdutoDTO cadastroProdutoDTO, Loja loja) {

@@ -164,6 +164,7 @@
     <table>
         <thead>
         <tr>
+            <th>Código</th>
             <th>Nome</th>
             <th>Marca</th>
             <th>Tamanho</th>
@@ -174,6 +175,7 @@
         </thead>
         <tbody>
         <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.idProduto}">Código do Produto</td>
             <td th:text="${produto.nome}">Nome do Produto</td>
             <td th:text="${produto.marca}">Marca do Produto</td>
             <td th:text="${produto.tamanho}">Tamanho do Produto</td>

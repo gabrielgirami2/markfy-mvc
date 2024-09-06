@@ -34,7 +34,7 @@ public class ProdutoController {
 
         List<Produto> produtos = produtoService.listarProdutosDaLojaDoUsuario(idUsuario);
         model.addAttribute("produtos", produtos);
-        return "produto/lista-produtos";
+        return "produto/tabela-produtos";
     }
 
     @PostMapping("/cadastrar")
