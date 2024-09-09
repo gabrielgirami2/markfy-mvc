@@ -1,40 +1,266 @@
-<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml" >
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markfy - Transforme seu Negócio</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-    <meta charset="UTF-8">
-    <title>Home</title>
     <style>
-        .logo-container {
-            background-color: #563d7c;
-            color: #fff;
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #000;
         }
+
+        .logo-container {
+            background-color: #000;
+            color: #fff;
+            border-bottom: 4px solid #563d7c;
+        }
+
         .logo {
             font-family: 'Oswald', sans-serif;
             font-size: 2.5rem;
+            color: #fff;
         }
+
         a {
             color: #fff;
             text-decoration: none;
         }
+
         a:hover {
-                text-decoration: none;
-            color: #fff
+            text-decoration: none;
+            color: #563d7c;
+        }
+
+        .hero {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            border-bottom: 5px solid #563d7c;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://img.freepik.com/fotos-gratis/grupo-de-jovens-se-unindo-no-trabalho_23-2148816841.jpg?w=1480&t=st=1725841455~exp=1725842055~hmac=13c0c1511dde4abeec77c4b7eaac5b040ae478457d59be0c4b99abbcd971bcac') no-repeat center center;
+            background-size: cover;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 600px;
+            padding-left: 50px;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #000;
+        }
+
+
+        .btn-primary {
+            background-color: #563d7c;
+            border-color: #563d7c;
+            font-size: 1.2rem;
+            padding: 12px 30px;
+            border-radius: 30px;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #452a65;
+            border-color: #452a65;
+        }
+
+        .features {
+            padding: 50px 0;
+            text-align: center;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .feature-box {
+            padding: 20px;
+        }
+
+        .feature-box i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #563d7c;
+        }
+
+        .feature-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .feature-box p {
+            font-size: 1rem;
+            color: #555555;
+        }
+
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 4px solid #563d7c;
+        }
+
+        .footer a {
+            color: #563d7c;
+        }
+
+        .footer a:hover {
+            color: #ddd;
+        }
+
+         .contact-section {
+            background-color: #f8f9fa;
+        }
+
+        .contact-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #563d7c;
+        }
+
+        .contact-section .form-control {
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .contact-section .btn-primary {
+            background-color: #563d7c;
+            border-color: #563d7c;
+            padding: 10px 30px;
+            border-radius: 30px;
+        }
+
+        .contact-section .btn-primary:hover {
+            background-color: #452a65;
+            border-color: #452a65;
         }
     </style>
 </head>
+<body>
 
-<div class="logo-container mb-3 p-4 d-flex justify-content-between" th:fragment="header">
+<div class="logo-container mb-3 p-4 d-flex justify-content-between align-items-center">
     <a href="/" target="_self" class="logo">Markfy</a>
-    <span th:text="${usuario}">Nome do Usuário</span>
-</div>
+    <div>
+        <a href="#contact" class="me-4">Contato</a>
+        <a href="/login" class="btn btn-outline-light">Entrar no Console</a>
+    </div>
 </div>
 
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Transforme seu Negócio</h1>
+        <p>Com o Markfy, você pode gerenciar sua loja, clientes e produtos de forma simples e eficiente. Aumente suas vendas e alcance seus objetivos.</p>
+        <a href="#features" class="btn btn-primary">Começar Agora</a>
+    </div>
+</section>
+
+<section id="features" class="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-box"></i>
+                <h3>Gerenciamento de Produtos</h3>
+                <p>Adicione, edite e acompanhe seus produtos em uma interface intuitiva e fácil de usar.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-users"></i>
+                <h3>Gestão de Clientes</h3>
+                <p>Mantenha o controle de seus clientes e interaja com eles diretamente pelo Markfy.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-chart-line"></i>
+                <h3>Análises Avançadas</h3>
+                <p>Visualize relatórios e análises detalhadas para aumentar a eficiência do seu negócio.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="contact" class="contact-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h2 class="mb-4">Entre em Contato</h2>
+                <form action="mailto:contato@markfy.com.br" method="POST" enctype="text/plain">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Seu Nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Seu Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Mensagem</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Sua Mensagem" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="mb-4">Nossa Localização</h2>
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29253.742681730462!2d-46.69053725865081!3d-23.57857544239742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c7dbf9ff57%3A0x4ca8eb5c4f7ecca9!2sFIAP%20-%20Paulista!5e0!3m2!1spt-BR!2sbr!4v1725842796131!5m2!1spt-BR!2sbr"
+                        width="100%"
+                        height="350"
+                        frameborder="0"
+                        style="border:0;"
+                        allowfullscreen=""
+                        aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <p>&copy; 2024 Markfy. Todos os direitos reservados.</p>
+    <p><a href="#">Termos de Serviço</a> | <a href="#">Política de Privacidade</a></p>
+</footer>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
 </html>

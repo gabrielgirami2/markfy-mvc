@@ -39,6 +39,11 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/contato")
+    public String contato(UsuarioLoginDTO usuarioLoginDTO, Model model){
+        return "contato";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();

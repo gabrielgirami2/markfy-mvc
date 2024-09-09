@@ -31,6 +31,14 @@ public class Usuario {
         this.loja = loja;
     }
 
+    public Usuario(String nomeUsuario, String sobrenomeUsuario, String emailUsuario, String senha, Loja lojaSave) {
+        this.nomeUsuario = nomeUsuario;
+        this.sobrenomeUsuario = sobrenomeUsuario;
+        this.emailUsuario = emailUsuario;
+        this.senha = senha;
+        this.loja = lojaSave;
+    }
+
     public void alterarUsuario(AlterarUsuarioDTO alterarUsuarioDTO) {
         if(alterarUsuarioDTO.nomeUsuario() != null) this.nomeUsuario = alterarUsuarioDTO.nomeUsuario();
         if(alterarUsuarioDTO.sobrenomeUsuario() != null) this.sobrenomeUsuario = alterarUsuarioDTO.sobrenomeUsuario();
