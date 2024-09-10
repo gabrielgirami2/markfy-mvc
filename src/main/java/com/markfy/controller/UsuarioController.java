@@ -1,5 +1,7 @@
 package com.markfy.controller;
 
+import com.markfy.dto.produto.AlterarProdutoDTO;
+import com.markfy.dto.usuario.AlterarUsuarioDTO;
 import com.markfy.dto.usuario.CadastroUsuarioDTO;
 import com.markfy.dto.usuario.UsuarioLoginDTO;
 import com.markfy.models.Usuario;
@@ -9,10 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class UsuarioController {
 
     @PostMapping("/entrar")
     @Transactional
-    public String entrar(UsuarioLoginDTO usuarioLoginDTO, Model model, HttpSession session){
+    public String entrar(@ModelAttribute UsuarioLoginDTO usuarioLoginDTO, Model model, HttpSession session){
         try {
             Usuario usuario = usuarioService.entrar(usuarioLoginDTO);
             session.setAttribute("usuario", usuario.getIdUsuario());
@@ -38,10 +37,41 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping("/cadastrar")
+    @Transactional
+    public String cadastrarApi(@ModelAttribute CadastroUsuarioDTO cadastroUsuarioDTO, Model model, HttpSession session) throws Exception {
+        Long idUsuario = (Long) session.getAttribute("usuario");
+
+        if(idUsuario == null){
+            return "redirect:/login";
+        }
+
+        usuarioService.cadastrar(idUsuario, cadastroUsuarioDTO);
+        model.addAttribute("/");
+        return "redirect:/loja";
+    }
+
+    @PostMapping("/editar/{id}")
+    @Transactional
+    public String editar(@PathVariable Long id, AlterarUsuarioDTO alterarUsuarioDTO, Model model){
+        usuarioService.alterar(id, alterarUsuarioDTO);
+        model.addAttribute("/");
+        return "redirect:/loja";
+    }
+
+    @PostMapping("/deletar/{id}")
+    @Transactional
+    public String exluir(@PathVariable Long id, Model model){
+        usuarioService.deletar(id);
+        model.addAttribute("/");
+        return "redirect:/loja";
+    }
+
+
     @PostMapping("/api/cadastrar")
     @Transactional
     public ResponseEntity cadastrarApi(@RequestBody CadastroUsuarioDTO cadastroUsuarioDTO) throws Exception {
-        Usuario cadastrar = usuarioService.cadastrar(cadastroUsuarioDTO);
+        Usuario cadastrar = usuarioService.cadastrarApi(cadastroUsuarioDTO);
         return ResponseEntity.ok().body(cadastrar);
     }
 

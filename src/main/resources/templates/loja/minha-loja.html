@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <head th:replace="~{base :: head}"></head>
+    <style>
+        .content {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            margin-left: 280px;
+            padding: 20px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .content-header h1 {
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #452a5e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            min-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        thead tr {
+            background-color: #563d7c;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:last-of-type {
+            border-bottom: 2px solid #563d7c;
+        }
+
+        .modal {
+            display: none; /* Ocultar o modal por padrão */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #452a5e;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btns button {
+            background: none;
+            border: none;
+            color: #563d7c;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .action-btns button:hover {
+            background-color: #452a5e;
+            color: #fff;
+        }
+
+        /* Caixa de informações da loja */
+        .store-info {
+            background-color: #f3f3f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .store-info h2 {
+            margin-top: 0;
+        }
+
+        .usuarios{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{base :: menu(page='minha_loja')}"></div>
+<div class="content">
+
+
+    <div class="content-header">
+        <h1>Minha Loja</h1>
+        <button class="btn" id="editStoreBtn">Editar Loja</button>
+    </div>
+
+    <div class="store-info">
+        <h2 th:text="${loja.nome}">Nome da Loja</h2>
+        <p><strong>CNPJ:</strong> <span th:text="${loja.cnpj}">00.000.000/0001-00</span></p>
+    </div>
+
+    <div class="usuarios">
+        <h2>Usuários da Loja</h2>
+        <a href="#" class="btn" id="addUserBtn">Adicionar Usuário</a>
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="usuario : ${loja.usuarios}">
+                <td th:text="${usuario.nomeUsuario}">Nome</td>
+                <td th:text="${usuario.sobrenomeUsuario}">Sobrenome</td>
+                <td th:text="${usuario.emailUsuario}">Email</td>
+                <td class="action-btns">
+                    <button class="btn edit-user-btn"
+                            th:attr="data-id=${usuario.idUsuario},
+                                     data-nome=${usuario.nomeUsuario},
+                                     data-sobrenome=${usuario.sobrenomeUsuario},
+                                     data-email=${usuario.emailUsuario}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn delete-user-btn" th:attr="data-id=${usuario.idUsuario}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para Edição da Loja -->
+<div id="editStoreModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeEditStoreModal">&times;</span>
+        <h2>Editar Loja</h2>
+        <form th:object="${loja}" th:action="@{/loja/alterar/{id}(id=${loja.idLoja})}" method="post">
+            <div class="form-group">
+                <label for="nomeLoja">Nome:</label>
+                <input th:field="*{nome}" type="text" id="nomeLoja" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="cnpj">CNPJ:</label>
+                <input th:field="*{cnpj}" type="text" id="cnpj" name="cnpj" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar Alterações">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para Adição e Edição de Usuário -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeUserModal">&times;</span>
+        <h2>Cadastrar/Editar Usuário</h2>
+        <form th:object="${alterarUsuarioDTO}" action="#" method="post" id="userForm">
+            <div class="form-group">
+                <label for="nomeUsuario">Nome:</label>
+                <input th:field="*{nomeUsuario}" type="text" id="nomeUsuario" name="nomeUsuario" required>
+            </div>
+            <div class="form-group">
+                <label for="sobrenomeUsuario">Sobrenome:</label>
+                <input th:field="*{sobrenomeUsuario}" type="text" id="sobrenomeUsuario" name="sobrenomeUsuario" required>
+            </div>
+            <div class="form-group">
+                <label for="emailUsuario">Email:</label>
+                <input th:field="*{emailUsuario}" type="email" id="emailUsuario" name="emailUsuario" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input th:field="*{senha}" type="password" id="senha" name="senha" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para Exclusão de Usuário -->
+<div id="deleteUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeDeleteUserModal">&times;</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza de que deseja excluir este usuário?</p>
+        <form action="#" method="post" id="deleteUserForm">
+            <div class="form-group">
+                <input type="submit" value="Excluir">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editStoreBtn').addEventListener('click', function () {
+        document.getElementById('editStoreModal').style.display = 'block';
+    });
+
+    document.getElementById('closeEditStoreModal').addEventListener('click', function () {
+        document.getElementById('editStoreModal').style.display = 'none';
+    });
+
+    document.getElementById('addUserBtn').addEventListener('click', function () {
+        document.getElementById('userModal').style.display = 'block';
+        document.getElementById('userForm').action = "/usuario/cadastrar";
+    });
+
+    document.querySelectorAll('.edit-user-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const userId = btn.getAttribute('data-id');
+            const nome = btn.getAttribute('data-nome');
+            const sobrenome = btn.getAttribute('data-sobrenome');
+            const email = btn.getAttribute('data-email');
+            document.getElementById('nomeUsuario').value = nome;
+            document.getElementById('sobrenomeUsuario').value = sobrenome;
+            document.getElementById('emailUsuario').value = email;
+            document.getElementById('userForm').action = "/usuario/editar/" + userId;
+            document.getElementById('userModal').style.display = 'block';
+        });
+    });
+
+    document.querySelectorAll('.delete-user-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const userId = btn.getAttribute('data-id');
+            document.getElementById('deleteUserModal').style.display = 'block';
+            document.getElementById('deleteUserForm').action = "/usuario/deletar/" + userId;
+        });
+    });
+
+    document.getElementById('closeUserModal').addEventListener('click', function () {
+        document.getElementById('userModal').style.display = 'none';
+    });
+
+    document.getElementById('closeDeleteUserModal').addEventListener('click', function () {
+        document.getElementById('deleteUserModal').style.display = 'none';
+    });
+</script>
+
+</body>
+</html>

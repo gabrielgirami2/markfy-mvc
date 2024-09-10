@@ -7,7 +7,8 @@ import org.hibernate.validator.constraints.br.CNPJ;
 public record CadastroLojaUsuarioDTO(
         @NotBlank
         String nomeLoja,
-        @CNPJ
+        @NotBlank
+                @CNPJ
         String cnpj,
         @NotBlank
         String nomeUsuario,

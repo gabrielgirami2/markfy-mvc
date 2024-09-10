@@ -6,6 +6,7 @@ import com.markfy.dto.usuario.CadastroUsuarioDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Table
 @Entity
@@ -20,8 +21,19 @@ public class Usuario {
     private String emailUsuario;
     private String senha;
     @ManyToOne
-    @JsonIgnore
     private Loja loja;
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nomeUsuario='" + nomeUsuario + '\'' +
+                ", sobrenomeUsuario='" + sobrenomeUsuario + '\'' +
+                ", emailUsuario='" + emailUsuario + '\'' +
+                ", senha ='" + senha + '\'' +
+                '}';
+    }
+
 
     public Usuario(CadastroUsuarioDTO cadastroUsuarioDTO, Loja loja) {
         this.nomeUsuario = cadastroUsuarioDTO.nomeUsuario();

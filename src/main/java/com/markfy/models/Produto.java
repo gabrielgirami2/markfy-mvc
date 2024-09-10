@@ -3,6 +3,7 @@ package com.markfy.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.markfy.dto.produto.AlterarProdutoDTO;
 import com.markfy.dto.produto.CadastroProdutoDTO;
+import com.markfy.dto.usuario.CadastroUsuarioDTO;
 import com.markfy.models.enums.TamanhoEnum;
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,5 +1,7 @@
 package com.markfy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.markfy.dto.loja.AlterarLojaDTO;
 import com.markfy.dto.loja.CadastroLojaDTO;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,6 +21,7 @@ public class Loja {
     private String cnpj;
 
     @OneToMany(mappedBy = "loja")
+    @JsonIgnore
     private List<Usuario> usuarios;
 
     @OneToMany(mappedBy = "loja")
@@ -27,8 +30,24 @@ public class Loja {
     @OneToMany(mappedBy = "loja")
     private List<Produto> produtos;
 
+    @Override
+    public String toString() {
+        return "Loja{" +
+                "idLoja=" + idLoja +
+                ", nome='" + nome + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                '}';
+    }
+
+
     public Loja(CadastroLojaDTO cadastroLojaDTO) {
         this.nome = cadastroLojaDTO.nome();
         this.cnpj = cadastroLojaDTO.cnpj();
+    }
+
+
+    public void alterar(AlterarLojaDTO alterarLojaDTO) {
+        if(alterarLojaDTO.nome() != null) this.nome = alterarLojaDTO.nome();
+        if(alterarLojaDTO.cnpj() != null) this.cnpj = alterarLojaDTO.cnpj();
     }
 }

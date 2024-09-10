@@ -4,6 +4,7 @@ import com.markfy.dto.usuario.AlterarUsuarioDTO;
 import com.markfy.dto.usuario.CadastroUsuarioDTO;
 import com.markfy.dto.usuario.UsuarioLoginDTO;
 import com.markfy.models.Loja;
+import com.markfy.models.Produto;
 import com.markfy.models.Usuario;
 import com.markfy.repository.LojaRepository;
 import com.markfy.repository.UsuarioRepository;
@@ -21,7 +22,7 @@ public class UsuarioService{
     @Autowired
     private LojaRepository lojaRepository;
 
-    public Usuario cadastrar(CadastroUsuarioDTO cadastroUsuarioDTO) throws Exception {
+    public Usuario cadastrarApi(CadastroUsuarioDTO cadastroUsuarioDTO) throws Exception {
         Usuario usuarioByEmail = usuarioRepository.findByEmailUsuario(cadastroUsuarioDTO.emailUsuario());
 
         if(usuarioByEmail != null){
@@ -29,7 +30,7 @@ public class UsuarioService{
         }
 
         Loja lojaById = lojaRepository.getReferenceById(cadastroUsuarioDTO.idLoja());
-        System.out.println(lojaById);
+
         Usuario usuario = new Usuario(cadastroUsuarioDTO, lojaById);
         usuarioRepository.save(usuario);
         return usuario;
@@ -57,6 +58,13 @@ public class UsuarioService{
             throw new Exception("Usuário ou senha incorretos");
         }
 
+        return usuario;
+    }
+
+    public Usuario cadastrar(Long idUsuario, CadastroUsuarioDTO cadastroUsuarioDTO) {
+        Loja loja = usuarioRepository.findById(idUsuario).get().getLoja();
+        Usuario usuario = new Usuario(cadastroUsuarioDTO, loja);
+        usuarioRepository.save(usuario);
         return usuario;
     }
 }
