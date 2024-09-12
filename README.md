@@ -1,3 +1,11 @@
+# Vídeo de Demonstração
+
+Confira abaixo o vídeo de demonstração da aplicação no YouTube:
+
+[Assista ao vídeo de demonstração no YouTube](https://www.youtube.com/watch?v=hc2LBvjBTe4&t=4s)
+
+---
+
 # Código Fonte (Deploy)
 
 Utilizamos uma organização no GitHub para o versionamento dos códigos, abaixo disponibilizamos o link do repositório da aplicação principal:
