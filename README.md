@@ -58,7 +58,7 @@ Após o término da implantação, entre no aplicativo e selecione a opção **"
 
 ### Link do deploy já realizado pela equipe:
 
-[Markfy - Transforme seu Negócio](#)
+[Markfy - Transforme seu Negócio](https://markfy.gentlemushroom-4572ad2a.eastus.azurecontainerapps.io/)
 
 ---
 
