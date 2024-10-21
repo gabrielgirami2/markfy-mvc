@@ -30,6 +30,8 @@ public class ClienteController {
     @GetMapping
     public String paginaCliente(Model model, HttpSession session, CadastroClienteDTO cadastroClienteDTO, AlterarClienteDTO alterarClienteDTO){
         Long idUsuario = (Long) session.getAttribute("usuario");
+        String nomeUsuario = (String) session.getAttribute("nomeUsuario");
+        model.addAttribute("nomeUsuario", nomeUsuario);
 
         if(idUsuario == null){return "redirect:/login";}
 

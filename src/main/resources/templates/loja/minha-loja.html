@@ -198,6 +198,7 @@
                 <th>Nome</th>
                 <th>Sobrenome</th>
                 <th>Email</th>
+                <th>Perfil</th>
                 <th>Ações</th>
             </tr>
             </thead>
@@ -206,6 +207,7 @@
                 <td th:text="${usuario.nomeUsuario}">Nome</td>
                 <td th:text="${usuario.sobrenomeUsuario}">Sobrenome</td>
                 <td th:text="${usuario.emailUsuario}">Email</td>
+                <td th:text="${usuario.roles}">Email</td>
                 <td class="action-btns">
                     <button class="btn edit-user-btn"
                             th:attr="data-id=${usuario.idUsuario},

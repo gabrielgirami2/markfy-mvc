@@ -8,7 +8,10 @@ import com.markfy.dto.usuario.AlterarUsuarioDTO;
 import com.markfy.dto.usuario.CadastroUsuarioDTO;
 import com.markfy.dto.usuario.UsuarioLoginDTO;
 import com.markfy.models.Loja;
+import com.markfy.models.Usuario;
+import com.markfy.repository.UsuarioRepository;
 import com.markfy.service.LojaService;
+import com.markfy.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -32,11 +35,14 @@ public class LojaController {
     @Transactional
     public String minhaLoja(@ModelAttribute AlterarLojaDTO alterarLojaDTO, AlterarUsuarioDTO alterarUsuarioDTO, HttpSession session, Model model){
         Long usuario = (Long) session.getAttribute("usuario");
+        String nomeUsuario = (String) session.getAttribute("nomeUsuario");
+        model.addAttribute("nomeUsuario", nomeUsuario);
 
         if(usuario == null) return "redirect:/login";
 
         Loja loja = lojaService.buscarLojaPorIdUsuario(usuario);
         model.addAttribute("loja", loja);
+
         return "loja/minha-loja";
     }
 
@@ -56,10 +62,11 @@ public class LojaController {
 
     @PostMapping("/cadastrar")
     @Transactional
-    public String cadastrarLoja(@ModelAttribute CadastroLojaUsuarioDTO cadastroLojaUsuarioDTO, HttpSession session, BindingResult result, Model model){
+    public String cadastrarLoja(@ModelAttribute CadastroLojaUsuarioDTO cadastroLojaUsuarioDTO, HttpSession session, BindingResult result, Model model) throws Exception {
         Long usuarioId = lojaService.cadastarLojaUsuario(cadastroLojaUsuarioDTO);
         session.setAttribute("usuario", usuarioId);
         model.addAttribute("/");
+
         return "redirect:/home";
     }
 

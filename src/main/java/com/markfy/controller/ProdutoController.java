@@ -29,6 +29,8 @@ public class ProdutoController {
     @GetMapping
     public String paginaProduto(Model model, HttpSession session, CadastroProdutoDTO cadastroProdutoDTO, AlterarProdutoDTO alterarProdutoDTO){
         Long idUsuario = (Long) session.getAttribute("usuario");
+        String nomeUsuario = (String) session.getAttribute("nomeUsuario");
+        model.addAttribute("nomeUsuario", nomeUsuario);
 
         if(idUsuario == null){return "redirect:/login";}
 

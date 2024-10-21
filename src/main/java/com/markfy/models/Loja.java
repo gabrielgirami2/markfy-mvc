@@ -39,6 +39,10 @@ public class Loja {
                 '}';
     }
 
+    public Loja(String nome, String cnpj) {
+        this.nome = nome;
+        this.cnpj = cnpj;
+    }
 
     public Loja(CadastroLojaDTO cadastroLojaDTO) {
         this.nome = cadastroLojaDTO.nome();

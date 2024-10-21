@@ -153,14 +153,14 @@
     </div>
     <div class="login-form">
         <h2>Login</h2>
-        <form th:object="${usuarioLoginDTO}" action="/usuario/entrar" method="post">
+        <form th:action="@{/login}" method="post">
             <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input th:field="*{email}" type="email" id="email" name="email" required>
+                <label for="username">E-mail:</label>
+                <input type="email" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="senha">Senha:</label>
-                <input th:field="*{senha}" type="password" id="senha" name="password" required>
+                <input type="password" id="senha" name="password" required>
             </div>
             <input type="submit" value="Entrar">
             <a href="#">Esqueceu a senha?</a>

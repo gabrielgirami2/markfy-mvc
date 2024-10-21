@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Set;
+
 @Table
 @Entity
 @Data
@@ -22,6 +24,8 @@ public class Usuario {
     private String senha;
     @ManyToOne
     private Loja loja;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles;
 
     @Override
     public String toString() {
@@ -34,6 +38,14 @@ public class Usuario {
                 '}';
     }
 
+    public Usuario(String nomeUsuario, String sobrenomeUsuario, String emailUsuario, String senha,  Set<String> roles, Loja loja) {
+        this.nomeUsuario = nomeUsuario;
+        this.sobrenomeUsuario = sobrenomeUsuario;
+        this.emailUsuario = emailUsuario;
+        this.senha = senha;
+        this.roles = roles;
+        this.loja = loja;
+    }
 
     public Usuario(CadastroUsuarioDTO cadastroUsuarioDTO, Loja loja) {
         this.nomeUsuario = cadastroUsuarioDTO.nomeUsuario();

@@ -54,6 +54,22 @@
         .sidebar .logout {
             margin-top: auto;
             margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+        }
+        
+        .sidebar .user-info {
+            font-size: 15px;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            width: 80%;
+        }
+
+        .sidebar .user-info i{
+            margin-right: 15px;
         }
 
         .sidebar a.active {
@@ -79,7 +95,14 @@
     <a th:classappend="${page == 'produtos'} ? 'active'" href="/produto"><i class="fas fa-box"></i>Produtos</a>
     <a th:classappend="${page == 'analises'} ? 'active'" href="#"><i class="fas fa-chart-line"></i>Análises</a>
     <a th:classappend="${page == 'minha_loja'} ? 'active'" href="/loja"><i class="fas fa-store"></i>Minha Loja</a>
-    <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i>Sair</a>
+
+    <div class="logout">
+        <div class="user-info">
+            <i class="fas fa-user"></i>
+            <p th:text="${nomeUsuario}">Nome do usuário</p>
+        </div>
+        <a href="/logout" ><i class="fas fa-sign-out-alt"></i>Sair</a>
+    </div>
 </div>
 </body>
 </html>

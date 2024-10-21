@@ -23,20 +23,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping("/entrar")
-    @Transactional
-    public String entrar(@ModelAttribute UsuarioLoginDTO usuarioLoginDTO, Model model, HttpSession session){
-        try {
-            Usuario usuario = usuarioService.entrar(usuarioLoginDTO);
-            session.setAttribute("usuario", usuario.getIdUsuario());
-            model.addAttribute("/");
-            return "redirect:/home";
-        } catch (Exception e) {
-            model.addAttribute("/");
-            return "redirect:/login";
-        }
-    }
-
     @PostMapping("/cadastrar")
     @Transactional
     public String cadastrarApi(@ModelAttribute CadastroUsuarioDTO cadastroUsuarioDTO, Model model, HttpSession session) throws Exception {

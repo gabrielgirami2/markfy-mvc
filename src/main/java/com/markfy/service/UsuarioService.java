@@ -9,8 +9,12 @@ import com.markfy.models.Usuario;
 import com.markfy.repository.LojaRepository;
 import com.markfy.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +25,9 @@ public class UsuarioService{
     private UsuarioRepository usuarioRepository;
     @Autowired
     private LojaRepository lojaRepository;
+
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public Usuario cadastrarApi(CadastroUsuarioDTO cadastroUsuarioDTO) throws Exception {
         Usuario usuarioByEmail = usuarioRepository.findByEmailUsuario(cadastroUsuarioDTO.emailUsuario());
@@ -51,20 +58,25 @@ public class UsuarioService{
         usuarioRepository.deleteById(id);
     }
 
-    public Usuario entrar(UsuarioLoginDTO usuarioLoginDTO) throws Exception {
-        Usuario usuario = usuarioRepository.findByEmailUsuario(usuarioLoginDTO.email());
 
-        if(usuario == null || !usuarioLoginDTO.senha().equals(usuario.getSenha())){
-            throw new Exception("Usuário ou senha incorretos");
+    public Usuario cadastrar(Long idUsuario, CadastroUsuarioDTO cadastroUsuarioDTO) throws Exception {
+        Loja loja = usuarioRepository.findById(idUsuario).get().getLoja();
+
+        if (usuarioRepository.findByEmailUsuario(cadastroUsuarioDTO.emailUsuario()) != null) {
+            throw new Exception("Esse usuário já possui um cadastro");
         }
 
-        return usuario;
-    }
+        String senhaEncode = passwordEncoder.encode(cadastroUsuarioDTO.senha());
+        HashSet<String> roleUser = new HashSet<>(Collections.singletonList("ROLE_USER"));
 
-    public Usuario cadastrar(Long idUsuario, CadastroUsuarioDTO cadastroUsuarioDTO) {
-        Loja loja = usuarioRepository.findById(idUsuario).get().getLoja();
-        Usuario usuario = new Usuario(cadastroUsuarioDTO, loja);
-        usuarioRepository.save(usuario);
-        return usuario;
+        Usuario usuario = new Usuario(cadastroUsuarioDTO.nomeUsuario(),
+                cadastroUsuarioDTO.sobrenomeUsuario(),
+                cadastroUsuarioDTO.emailUsuario(),
+                senhaEncode,
+                roleUser,
+                loja
+        );
+
+        return usuarioRepository.save(usuario);
     }
 }
