@@ -138,6 +138,13 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
+        .error-message {
+            color: #ff6347;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -161,6 +168,9 @@
             <div class="form-group">
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="password" required>
+            </div>
+            <div class="error-message" th:if="${param.error}">
+                <p>Usuário ou senha inválidos</p>
             </div>
             <input type="submit" value="Entrar">
             <a href="#">Esqueceu a senha?</a>
