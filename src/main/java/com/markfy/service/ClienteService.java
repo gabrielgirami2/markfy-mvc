@@ -32,8 +32,8 @@ public class ClienteService {
     public Cliente cadastrar(Long idUsuario, CadastroClienteDTO cadastroClienteDTO) {
         Loja loja = usuarioRepository.findById(idUsuario).get().getLoja();
         Cliente cliente = new Cliente(cadastroClienteDTO, loja);
-        clienteRepository.save(cliente);
-        return cliente;
+        Cliente clienteSave = clienteRepository.save(cliente);
+        return clienteSave;
     }
 
     public Cliente alterar(Long id, AlterarClienteDTO alterarClienteDTO) {

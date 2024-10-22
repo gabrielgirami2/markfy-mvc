@@ -42,18 +42,19 @@ public class ClienteController {
 
     @PostMapping("/cadastrar")
     @Transactional
-    public String novo(@Valid CadastroClienteDTO cadastroClienteDTO, HttpSession session, BindingResult result, Model model){
-        Long idUsuario = (Long) session.getAttribute("usuario");
-
-        if(idUsuario == null){
-            return "redirect:/login";
-        }
-
+    public String novo(CadastroClienteDTO cadastroClienteDTO, HttpSession session, BindingResult result, Model model){
         try {
+            Long idUsuario = (Long) session.getAttribute("usuario");
+
+            if(idUsuario == null){
+                return "redirect:/login";
+            }
+
             clienteService.cadastrar(idUsuario, cadastroClienteDTO);
             model.addAttribute("/");
             return "redirect:/cliente";
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return "redirect:/login";
 
         }

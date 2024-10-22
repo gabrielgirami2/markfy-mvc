@@ -48,12 +48,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll())
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/loja/cadastrar",
-                        "/usuario/cadastrar",
-                        "/usuario/editar/**",
-                        "/usuario/deletar/**",
-                        "/loja/alterar/**",
-                        "/cliente/**"))
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 );
