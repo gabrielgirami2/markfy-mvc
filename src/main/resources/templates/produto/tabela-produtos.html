@@ -158,19 +158,19 @@
 <div th:replace="~{base :: menu(page='produtos')}"></div>
 <div class="content">
     <div class="content-header">
-        <h1>Lista de Produtos</h1>
-        <a href="#" class="btn" id="openModalBtn">Cadastrar Produto</a>
+        <h1 th:text="#{produto.lista}">Lista de Produtos</h1>
+        <a href="#" class="btn" id="openModalBtn" th:text="#{produto.cadastrar}">Cadastrar Produto</a>
     </div>
     <table>
         <thead>
         <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Marca</th>
-            <th>Tamanho</th>
-            <th>Estoque</th>
-            <th>Valor</th>
-            <th>Ações</th>
+            <th th:text="#{produto.codigo}">Código</th>
+            <th th:text="#{produto.nome}">Nome</th>
+            <th th:text="#{produto.marca}">Marca</th>
+            <th th:text="#{produto.tamanho}">Tamanho</th>
+            <th th:text="#{produto.estoque}">Estoque</th>
+            <th th:text="#{produto.valor}">Valor</th>
+            <th th:text="#{produto.acoes}">Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -203,22 +203,22 @@
 <div id="productModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeProductModal">&times;</span>
-        <h2>Cadastrar Produto</h2>
+        <h2 th:text="#{produto.cadastrar}">Cadastrar Produto</h2>
         <form th:object="${cadastroProdutoDTO}" id="productForm" action="/produto/cadastrar" method="post">
             <div class="form-group">
-                <label for="nome">Nome:</label>
+                <label for="nome" th:text="#{produto.nome}">Nome:</label>
                 <input th:field="*{nomeProduto}" type="text" id="nome" name="nome" required>
             </div>
             <div class="form-group">
-                <label for="valor">Valor:</label>
+                <label for="valor" th:text="#{produto.valor}">Valor:</label>
                 <input th:field="*{valorProduto}" type="number" id="valor" name="valor" step="0.01" required>
             </div>
             <div class="form-group">
-                <label for="marca">Marca:</label>
+                <label for="marca" th:text="#{produto.marca}">Marca:</label>
                 <input th:field="*{marcaProduto}" type="text" id="marca" name="marca" required>
             </div>
             <div class="form-group">
-                <label for="tamanho">Tamanho:</label>
+                <label for="tamanho" th:text="#{produto.tamanho}">Tamanho:</label>
                 <select th:field="*{tamanhoProduto}" id="tamanho" name="tamanho" required>
                     <option value="PP">PP</option>
                     <option value="P">P</option>
@@ -230,11 +230,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="estoque">Estoque:</label>
+                <label for="estoque" th:text="#{produto.estoque}">Estoque:</label>
                 <input th:field="*{estoque}" type="number" id="estoque" name="estoque" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar">
+                <input type="submit" th:value="#{produto.cadastrar}">  <!-- "Cadastrar" -->
             </div>
         </form>
     </div>
@@ -243,22 +243,22 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeEditModal">&times;</span>
-        <h2>Editar Produto</h2>
+        <h2 th:text="#{produto.editar}">Editar Produto</h2>
         <form th:object="${alterarProdutoDTO}" id="editProductForm" action="#" method="post">
             <div class="form-group">
-                <label for="editNome">Nome:</label>
+                <label for="editNome" th:text="#{produto.nome}">Nome:</label>
                 <input th:field="*{nomeProduto}" type="text" id="editNome" name="nome" required>
             </div>
             <div class="form-group">
-                <label for="editValor">Valor:</label>
+                <label for="editValor" th:text="#{produto.valor}">Valor:</label>
                 <input th:field="*{valorProduto}" type="number" id="editValor" name="valor" step="0.01" required>
             </div>
             <div class="form-group">
-                <label for="editMarca">Marca:</label>
+                <label for="editMarca" th:text="#{produto.marca}">Marca:</label>
                 <input th:field="*{marcaProduto}" type="text" id="editMarca" name="marca" required>
             </div>
             <div class="form-group">
-                <label for="editTamanho">Tamanho:</label>
+                <label for="editTamanho" th:text="#{produto.tamanho}">Tamanho:</label>
                 <select th:field="*{tamanhoProduto}" id="editTamanho" name="tamanho" required>
                     <option value="PP">PP</option>
                     <option value="P">P</option>
@@ -270,11 +270,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="editEstoque">Estoque:</label>
+                <label for="editEstoque" th:text="#{produto.estoque}">Estoque:</label>
                 <input th:field="*{estoque}" type="number" id="editEstoque" name="estoque" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar Alterações">
+                <input type="submit" th:value="#{produto.salvarAlteracoes}">  <!-- "Salvar Alterações" -->
             </div>
         </form>
     </div>
@@ -283,17 +283,18 @@
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeDeleteModal">&times;</span>
-        <h2>Confirmar Exclusão</h2>
-        <p>Tem certeza de que deseja excluir este produto?</p>
+        <h2 th:text="#{produto.confirmarExclusao}">Confirmar Exclusão</h2>
+        <p th:text="#{produto.confirmaExcluir}">Tem certeza de que deseja excluir este produto?</p>
         <form id="deleteProductForm" action="#" method="post">
             <input type="hidden" id="deleteProductId" name="id">
             <div class="form-group">
-                <input type="submit" value="Excluir" class="btn">
+                <input type="submit" th:value="#{produto.excluir}" class="btn">  <!-- "Excluir" -->
             </div>
         </form>
-        <button id="cancelDelete" class="btn">Cancelar</button>
+        <button id="cancelDelete" class="btn" th:text="#{produto.cancelar}">Cancelar</button>
     </div>
 </div>
+
 
 <script>
     var productModal = document.getElementById("productModal");

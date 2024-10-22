@@ -158,23 +158,23 @@
 <div th:replace="~{base :: menu(page='clientes')}"></div>
 <div class="content">
     <div class="content-header">
-        <h1>Lista de Clientes</h1>
-        <a href="#" class="btn" id="openModalBtn">Cadastrar Cliente</a>
+        <h1 th:text="#{clientes.titulo}">Lista de Clientes</h1>
+        <a href="#" class="btn" id="openModalBtn" th:text="#{clientes.cadastrar}">Cadastrar Cliente</a>
     </div>
     <table>
         <thead>
         <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>E-mail</th>
-            <th>CPF</th>
-            <th>Data de nascimento</th>
-            <th>Estado civil</th>
-            <th>Sexo</th>
-            <th>Nível educacional</th>
-            <th>Renda (ano)</th>
-            <th>Ocupação</th>
-            <th>Ações</th>
+            <th th:text="#{cliente.nome}">Nome</th>
+            <th th:text="#{cliente.sobrenome}">Sobrenome</th>
+            <th th:text="#{cliente.email}">E-mail</th>
+            <th th:text="#{cliente.cpf}">CPF</th>
+            <th th:text="#{cliente.data.nascimento}">Data de nascimento</th>
+            <th th:text="#{cliente.estado.civil}">Estado civil</th>
+            <th th:text="#{cliente.sexo}">Sexo</th>
+            <th th:text="#{cliente.nivel.educacional}">Nível educacional</th>
+            <th th:text="#{cliente.renda.anual}">Renda (ano)</th>
+            <th th:text="#{cliente.ocupacao}">Ocupação</th>
+            <th th:text="#{cliente.acoes}">Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -186,7 +186,7 @@
             <td th:text="${cliente.dataDeNasciemto}">Data de nascimento</td>
             <td th:text="${cliente.estadoCivil}">Estado civil</td>
             <td th:text="${cliente.sexo}">Sexo</td>
-            <td th:text="${cliente.nivelEducacional}">Nivel educacional</td>
+            <td th:text="${cliente.nivelEducacional}">Nível educacional</td>
             <td th:text="${cliente.rendaAnual}">Renda (ano)</td>
             <td th:text="${cliente.ocupacao}">Ocupação</td>
             <td class="action-btns">
@@ -202,10 +202,10 @@
                              data-nivelEducacional=${cliente.nivelEducacional},
                              data-rendaAnual=${cliente.rendaAnual},
                              data-ocupacao=${cliente.ocupacao}">
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit" th:text="#{acoes.editar}"></i>
                 </button>
                 <button class="btn delete-btn" th:attr="data-id=${cliente.idCliente}">
-                    <i class="fas fa-trash-alt"></i>
+                    <i class="fas fa-trash-alt" th:text="#{acoes.excluir}"></i>
                 </button>
             </td>
         </tr>
@@ -216,74 +216,74 @@
 <div id="clientModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeClientModal">&times;</span>
-        <h2>Cadastrar Cliente</h2>
+        <h2 th:text="#{clientes.cadastrar}">Cadastrar Cliente</h2>
         <form th:object="${cadastroClienteDTO}" id="clientForm" action="/cliente/cadastrar" method="post">
             <div class="form-group">
-                <label for="nome">Nome:</label>
+                <label for="nome" th:text="#{cliente.nome}">Nome:</label>
                 <input th:field="*{nomeCliente}" type="text" id="nome" name="nome" required>
             </div>
             <div class="form-group">
-                <label for="sobrenome">Sobrenome:</label>
+                <label for="sobrenome" th:text="#{cliente.sobrenome}">Sobrenome:</label>
                 <input th:field="*{sobrenomeCliente}" type="text" id="sobrenome" name="sobrenome" required>
             </div>
             <div class="form-group">
-                <label for="dataDeNasciemto">Data de nascimento:</label>
+                <label for="dataDeNasciemto" th:text="#{cliente.data.nascimento}">Data de nascimento:</label>
                 <input th:field="*{dataDeNasciemto}" type="date" id="dataDeNasciemto" name="dataDeNasciemto" required>
             </div>
             <div class="form-group">
-                <label for="emailCliente">E-mail:</label>
+                <label for="emailCliente" th:text="#{cliente.email}">E-mail:</label>
                 <input th:field="*{emailCliente}" type="email" id="emailCliente" name="emailCliente" required>
             </div>
             <div class="form-group">
-                <label for="sexo">Sexo:</label>
+                <label for="sexo" th:text="#{cliente.sexo}">Sexo:</label>
                 <select th:field="*{sexo}" id="sexo" name="sexo" required>
                     <option value="*">Selecione:</option>
-                    <option value="MASCULINO">Masculino</option>
-                    <option value="FEMININO">Feminino</option>
-                    <option value="OUTRO">Outro</option>
+                    <option value="MASCULINO" th:text="#{sexo.masculino}">Masculino</option>
+                    <option value="FEMININO" th:text="#{sexo.feminino}">Feminino</option>
+                    <option value="OUTRO" th:text="#{sexo.outro}">Outro</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="cpf">CPF:</label>
+                <label for="cpf" th:text="#{cliente.cpf}">CPF:</label>
                 <input th:field="*{cpf}" type="text" id="cpf" name="cpf" required>
             </div>
             <div class="form-group">
-                <label for="estadoCivil">Estado civil:</label>
+                <label for="estadoCivil" th:text="#{cliente.estado.civil}">Estado civil:</label>
                 <select th:field="*{estadoCivil}" id="estadoCivil" name="estadoCivil" required>
                     <option value="*">Selecione:</option>
-                    <option value="CASADO">Casado(a)</option>
-                    <option value="SOLTEIRO">Solteiro(a)</option>
+                    <option value="CASADO" th:text="#{estadoCivil.casado}">Casado(a)</option>
+                    <option value="SOLTEIRO" th:text="#{estadoCivil.solteiro}">Solteiro(a)</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="nivelEducacional">Nível educacional:</label>
+                <label for="nivelEducacional" th:text="#{cliente.nivel.educacional}">Nível educacional:</label>
                 <select th:field="*{nivelEducacional}" id="nivelEducacional" name="nivelEducacional" required>
                     <option value="*">Selecione:</option>
-                    <option value="FUNDAMENTAL">Ensino fundamental</option>
-                    <option value="MEDIO">Ensino médio</option>
-                    <option value="SUPERIOR_GRADUACAO">Graduação</option>
-                    <option value="POS_GRADUACAO">Pós graduação</option>
-                    <option value="MESTRADO">Mestrado</option>
-                    <option value="DOUTORADO">Doutorado</option>
-                    <option value="OUTRO">Outro</option>
+                    <option value="FUNDAMENTAL" th:text="#{nivelEducacional.fundamental}">Ensino fundamental</option>
+                    <option value="MEDIO" th:text="#{nivelEducacional.medio}">Ensino médio</option>
+                    <option value="SUPERIOR_GRADUACAO" th:text="#{nivelEducacional.superior}">Graduação</option>
+                    <option value="POS_GRADUACAO" th:text="#{nivelEducacional.pos}">Pós graduação</option>
+                    <option value="MESTRADO" th:text="#{nivelEducacional.mestrado}">Mestrado</option>
+                    <option value="DOUTORADO" th:text="#{nivelEducacional.doutorado}">Doutorado</option>
+                    <option value="OUTRO" th:text="#{nivelEducacional.outro}">Outro</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="rendaAnual">Renda(ano):</label>
+                <label for="rendaAnual" th:text="#{cliente.renda.anual}">Renda(ano):</label>
                 <input th:field="*{rendaAnual}" type="number" id="rendaAnual" name="rendaAnual" step="0.01" required>
             </div>
             <div class="form-group">
-                <label for="ocupacao">Estado civil:</label>
+                <label for="ocupacao" th:text="#{cliente.ocupacao}">Ocupação:</label>
                 <select th:field="*{ocupacao}" id="ocupacao" name="ocupacao" required>
                     <option value="*">Selecione:</option>
-                    <option value="ESTUDANTE">Estudante</option>
-                    <option value="EMPREGADO">Registrado</option>
-                    <option value="DESEMPREGADO">Sem ocupação</option>
-                    <option value="AUTONOMO">Autonômo</option>
+                    <option value="ESTUDANTE" th:text="#{ocupacao.estudante}">Estudante</option>
+                    <option value="EMPREGADO" th:text="#{ocupacao.empregado}">Registrado</option>
+                    <option value="DESEMPREGADO" th:text="#{ocupacao.desempregado}">Sem ocupação</option>
+                    <option value="AUTONOMO" th:text="#{ocupacao.autonomo}">Autônomo</option>
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar">
+                <input type="submit" th:value="#{clientes.cadastrar}">
             </div>
         </form>
     </div>
@@ -292,74 +292,74 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeEditModal">&times;</span>
-        <h2>Editar Produto</h2>
+        <h2 th:text="#{clientes.editar}">Editar Cliente</h2>
         <form th:object="${alterarClienteDTO}" id="editClientForm" action="#" method="post">
             <div class="form-group">
-                <label for="nome">Nome:</label>
+                <label for="nome" th:text="#{cliente.nome}">Nome:</label>
                 <input th:field="*{nomeCliente}" type="text" id="editNome" name="nome" required>
             </div>
             <div class="form-group">
-                <label for="sobrenome">Sobrenome:</label>
+                <label for="sobrenome" th:text="#{cliente.sobrenome}">Sobrenome:</label>
                 <input th:field="*{sobrenomeCliente}" type="text" id="editSobrenome" name="sobrenome" required>
             </div>
             <div class="form-group">
-                <label for="dataDeNasciemto">Data de nascimento:</label>
+                <label for="dataDeNasciemto" th:text="#{cliente.data.nascimento}">Data de nascimento:</label>
                 <input th:field="*{dataDeNasciemto}" type="date" id="editDataDeNasciemto" name="dataDeNasciemto" required>
             </div>
             <div class="form-group">
-                <label for="emailCliente">E-mail:</label>
+                <label for="emailCliente" th:text="#{cliente.email}">E-mail:</label>
                 <input th:field="*{emailCliente}" type="email" id="editEmailCliente" name="emailCliente" required>
             </div>
             <div class="form-group">
-                <label for="sexo">Sexo:</label>
+                <label for="sexo" th:text="#{cliente.sexo}">Sexo:</label>
                 <select th:field="*{sexo}" id="editSexo" name="sexo" required>
                     <option value="*">Selecione:</option>
-                    <option value="MASCULINO">Masculino</option>
-                    <option value="FEMININO">Feminino</option>
-                    <option value="OUTRO">Outro</option>
+                    <option value="MASCULINO" th:text="#{sexo.masculino}">Masculino</option>
+                    <option value="FEMININO" th:text="#{sexo.feminino}">Feminino</option>
+                    <option value="OUTRO" th:text="#{sexo.outro}">Outro</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="cpf">CPF:</label>
+                <label for="cpf" th:text="#{cliente.cpf}">CPF:</label>
                 <input th:field="*{cpf}" type="text" id="editCpf" name="cpf" required>
             </div>
             <div class="form-group">
-                <label for="estadoCivil">Estado civil:</label>
+                <label for="estadoCivil" th:text="#{cliente.estado.civil}">Estado civil:</label>
                 <select th:field="*{estadoCivil}" id="editEstadoCivil" name="estadoCivil" required>
                     <option value="*">Selecione:</option>
-                    <option value="CASADO">Casado(a)</option>
-                    <option value="SOLTEIRO">Solteiro(a)</option>
+                    <option value="CASADO" th:text="#{estadoCivil.casado}">Casado(a)</option>
+                    <option value="SOLTEIRO" th:text="#{estadoCivil.solteiro}">Solteiro(a)</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="nivelEducacional">Nível educacional:</label>
+                <label for="nivelEducacional" th:text="#{cliente.nivel.educacional}">Nível educacional:</label>
                 <select th:field="*{nivelEducacional}" id="editNivelEducacional" name="nivelEducacional" required>
                     <option value="*">Selecione:</option>
-                    <option value="FUNDAMENTAL">Ensino fundamental</option>
-                    <option value="MEDIO">Ensino médio</option>
-                    <option value="SUPERIOR_GRADUACAO">Graduação</option>
-                    <option value="POS_GRADUACAO">Pós graduação</option>
-                    <option value="MESTRADO">Mestrado</option>
-                    <option value="DOUTORADO">Doutorado</option>
-                    <option value="OUTRO">Outro</option>
+                    <option value="FUNDAMENTAL" th:text="#{nivelEducacional.fundamental}">Ensino fundamental</option>
+                    <option value="MEDIO" th:text="#{nivelEducacional.medio}">Ensino médio</option>
+                    <option value="SUPERIOR_GRADUACAO" th:text="#{nivelEducacional.superior}">Graduação</option>
+                    <option value="POS_GRADUACAO" th:text="#{nivelEducacional.pos}">Pós graduação</option>
+                    <option value="MESTRADO" th:text="#{nivelEducacional.mestrado}">Mestrado</option>
+                    <option value="DOUTORADO" th:text="#{nivelEducacional.doutorado}">Doutorado</option>
+                    <option value="OUTRO" th:text="#{nivelEducacional.outro}">Outro</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="rendaAnual">Renda(ano):</label>
+                <label for="rendaAnual" th:text="#{cliente.renda.anual}">Renda(ano):</label>
                 <input th:field="*{rendaAnual}" type="number" id="editRendaAnual" name="rendaAnual" step="0.01" required>
             </div>
             <div class="form-group">
-                <label for="ocupacao">Estado civil:</label>
+                <label for="ocupacao" th:text="#{cliente.ocupacao}">Ocupação:</label>
                 <select th:field="*{ocupacao}" id="editOcupacao" name="ocupacao" required>
                     <option value="*">Selecione:</option>
-                    <option value="ESTUDANTE">Estudante</option>
-                    <option value="EMPREGADO">Registrado</option>
-                    <option value="DESEMPREGADO">Sem ocupação</option>
-                    <option value="AUTONOMO">Autonômo</option>
+                    <option value="ESTUDANTE" th:text="#{ocupacao.estudante}">Estudante</option>
+                    <option value="EMPREGADO" th:text="#{ocupacao.empregado}">Registrado</option>
+                    <option value="DESEMPREGADO" th:text="#{ocupacao.desempregado}">Sem ocupação</option>
+                    <option value="AUTONOMO" th:text="#{ocupacao.autonomo}">Autônomo</option>
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar Alterações">
+                <input type="submit" th:value="#{clientes.salvarAlteracoes}">
             </div>
         </form>
     </div>
@@ -368,17 +368,18 @@
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeDeleteModal">&times;</span>
-        <h2>Confirmar Exclusão</h2>
-        <p>Tem certeza de que deseja excluir este cliente?</p>
+        <h2 th:text="#{clientes.confirmar.exclusao}">Confirmar Exclusão</h2>
+        <p th:text="#{clientes.confirmar.mensagem}">Tem certeza de que deseja excluir este cliente?</p>
         <form id="deleteClientForm" action="#" method="post">
             <input type="hidden" id="deleteClientId" name="id">
             <div class="form-group">
-                <input type="submit" value="Excluir" class="btn">
+                <input type="submit" th:value="#{clientes.excluir}" class="btn">
             </div>
         </form>
-        <button id="cancelDelete" class="btn">Cancelar</button>
+        <button id="cancelDelete" class="btn" th:text="#{clientes.cancelar}">Cancelar</button>
     </div>
 </div>
+
 
 <script>
     var clientModal = document.getElementById("clientModal");

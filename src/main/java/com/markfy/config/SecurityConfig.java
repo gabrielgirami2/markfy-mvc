@@ -52,7 +52,8 @@ public class SecurityConfig {
                         "/usuario/cadastrar",
                         "/usuario/editar/**",
                         "/usuario/deletar/**",
-                        "/loja/alterar/**"))
+                        "/loja/alterar/**",
+                        "/cliente/**"))
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 );

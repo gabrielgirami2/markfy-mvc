@@ -59,7 +59,7 @@
             align-items: center;
             width: 80%;
         }
-        
+
         .sidebar .user-info {
             font-size: 15px;
             margin-top: auto;
@@ -68,7 +68,7 @@
             width: 80%;
         }
 
-        .sidebar .user-info i{
+        .sidebar .user-info i {
             margin-right: 15px;
         }
 
@@ -90,18 +90,18 @@
 <body>
 <div th:fragment="menu" class="sidebar">
     <h2 class="logo">Markfy</h2>
-    <a th:classappend="${page == 'home'} ? 'active'" href="/home" ><i class="fas fa-home"></i>Principal</a>
-    <a th:classappend="${page == 'clientes'} ? 'active'" href="/cliente"><i class="fas fa-users"></i>Clientes</a>
-    <a th:classappend="${page == 'produtos'} ? 'active'" href="/produto"><i class="fas fa-box"></i>Produtos</a>
-    <a th:classappend="${page == 'analises'} ? 'active'" href="#"><i class="fas fa-chart-line"></i>Análises</a>
-    <a th:classappend="${page == 'minha_loja'} ? 'active'" href="/loja"><i class="fas fa-store"></i>Minha Loja</a>
+    <a th:classappend="${page == 'home'} ? 'active'" href="/home"><i class="fas fa-home"></i><span th:text="#{menu.principal}">Principal</span></a>
+    <a th:classappend="${page == 'clientes'} ? 'active'" href="/cliente"><i class="fas fa-users"></i><span th:text="#{menu.clientes}">Clientes</span></a>
+    <a th:classappend="${page == 'produtos'} ? 'active'" href="/produto"><i class="fas fa-box"></i><span th:text="#{menu.produtos}">Produtos</span></a>
+    <a th:classappend="${page == 'analises'} ? 'active'" href="#"><i class="fas fa-chart-line"></i><span th:text="#{menu.analises}">Análises</span></a>
+    <a th:classappend="${page == 'minha_loja'} ? 'active'" href="/loja"><i class="fas fa-store"></i><span th:text="#{menu.minhaLoja}">Minha Loja</span></a>
 
     <div class="logout">
         <div class="user-info">
             <i class="fas fa-user"></i>
             <p th:text="${nomeUsuario}">Nome do usuário</p>
         </div>
-        <a href="/logout" ><i class="fas fa-sign-out-alt"></i>Sair</a>
+        <a href="/logout"><i class="fas fa-sign-out-alt"></i><span th:text="#{menu.sair}">Sair</span></a>
     </div>
 </div>
 </body>

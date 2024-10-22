@@ -175,31 +175,29 @@
 <body>
 <div th:replace="~{base :: menu(page='minha_loja')}"></div>
 <div class="content">
-
-
     <div class="content-header">
-        <h1>Minha Loja</h1>
-        <button class="btn" id="editStoreBtn">Editar Loja</button>
+        <h1 th:text="#{store.title}">Minha Loja</h1>
+        <button class="btn" id="editStoreBtn" th:text="#{store.edit}">Editar Loja</button>
     </div>
 
     <div class="store-info">
         <h2 th:text="${loja.nome}">Nome da Loja</h2>
-        <p><strong>CNPJ:</strong> <span th:text="${loja.cnpj}">00.000.000/0001-00</span></p>
+        <p><strong th:text="#{store.cnpj}">CNPJ:</strong> <span th:text="${loja.cnpj}">00.000.000/0001-00</span></p>
     </div>
 
     <div class="usuarios">
-        <h2>Usuários da Loja</h2>
-        <a href="#" class="btn" id="addUserBtn">Adicionar Usuário</a>
+        <h2 th:text="#{store.users}">Usuários da Loja</h2>
+        <a href="#" class="btn" id="addUserBtn" th:text="#{store.addUser}">Adicionar Usuário</a>
     </div>
     <div>
         <table>
             <thead>
             <tr>
-                <th>Nome</th>
-                <th>Sobrenome</th>
-                <th>Email</th>
-                <th>Perfil</th>
-                <th>Ações</th>
+                <th th:text="#{store.name}">Nome</th>
+                <th th:text="#{store.surname}">Sobrenome</th>
+                <th th:text="#{store.email}">Email</th>
+                <th th:text="#{store.role}">Perfil</th>
+                <th th:text="#{store.actions}">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -214,10 +212,10 @@
                                      data-nome=${usuario.nomeUsuario},
                                      data-sobrenome=${usuario.sobrenomeUsuario},
                                      data-email=${usuario.emailUsuario}">
-                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-edit" th:attr="title=#{store.editUser}"></i>
                     </button>
                     <button class="btn delete-user-btn" th:attr="data-id=${usuario.idUsuario}">
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-trash-alt" th:attr="title=#{store.deleteUser}"></i>
                     </button>
                 </td>
             </tr>
@@ -230,18 +228,18 @@
 <div id="editStoreModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeEditStoreModal">&times;</span>
-        <h2>Editar Loja</h2>
+        <h2 th:text="#{store.editTitle}">Editar Loja</h2>
         <form th:object="${loja}" th:action="@{/loja/alterar/{id}(id=${loja.idLoja})}" method="post">
             <div class="form-group">
-                <label for="nomeLoja">Nome:</label>
+                <label for="nomeLoja" th:text="#{store.name}">Nome:</label>
                 <input th:field="*{nome}" type="text" id="nomeLoja" name="nome" required>
             </div>
             <div class="form-group">
-                <label for="cnpj">CNPJ:</label>
+                <label for="cnpj" th:text="#{store.cnpj}">CNPJ:</label>
                 <input th:field="*{cnpj}" type="text" id="cnpj" name="cnpj" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar Alterações">
+                <input type="submit" th:value="#{store.saveChanges}" value="Salvar Alterações">
             </div>
         </form>
     </div>
@@ -251,26 +249,26 @@
 <div id="userModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeUserModal">&times;</span>
-        <h2>Cadastrar/Editar Usuário</h2>
+        <h2 th:text="#{store.registerEditUser}">Cadastrar/Editar Usuário</h2>
         <form th:object="${alterarUsuarioDTO}" action="#" method="post" id="userForm">
             <div class="form-group">
-                <label for="nomeUsuario">Nome:</label>
+                <label for="nomeUsuario" th:text="#{store.name}">Nome:</label>
                 <input th:field="*{nomeUsuario}" type="text" id="nomeUsuario" name="nomeUsuario" required>
             </div>
             <div class="form-group">
-                <label for="sobrenomeUsuario">Sobrenome:</label>
+                <label for="sobrenomeUsuario" th:text="#{store.surname}">Sobrenome:</label>
                 <input th:field="*{sobrenomeUsuario}" type="text" id="sobrenomeUsuario" name="sobrenomeUsuario" required>
             </div>
             <div class="form-group">
-                <label for="emailUsuario">Email:</label>
+                <label for="emailUsuario" th:text="#{store.email}">Email:</label>
                 <input th:field="*{emailUsuario}" type="email" id="emailUsuario" name="emailUsuario" required>
             </div>
             <div class="form-group">
-                <label for="senha">Senha:</label>
+                <label for="senha" th:text="#{store.password}">Senha:</label>
                 <input th:field="*{senha}" type="password" id="senha" name="senha" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar">
+                <input type="submit" th:value="#{store.save}" value="Salvar">
             </div>
         </form>
     </div>
@@ -280,15 +278,16 @@
 <div id="deleteUserModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeDeleteUserModal">&times;</span>
-        <h2>Confirmar Exclusão</h2>
-        <p>Tem certeza de que deseja excluir este usuário?</p>
+        <h2 th:text="#{store.confirmDeletion}">Confirmar Exclusão</h2>
+        <p th:text="#{store.confirmDeletionMessage}">Tem certeza de que deseja excluir este usuário?</p>
         <form action="#" method="post" id="deleteUserForm">
             <div class="form-group">
-                <input type="submit" value="Excluir">
+                <input type="submit" th:value="#{store.delete}" value="Excluir">
             </div>
         </form>
     </div>
 </div>
+
 
 <script>
     document.getElementById('editStoreBtn').addEventListener('click', function () {

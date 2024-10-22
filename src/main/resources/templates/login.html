@@ -151,29 +151,29 @@
 <div class="login-container">
     <div class="login-sidebar">
         <h1>Markfy</h1>
-        <p>Bem-vindo de volta</p>
+        <p th:text="#{subtitulo}">Bem-vindo de volta</p>
         <hr style="width: 70%;">
         <div class="create-account">
-            <p>Ainda não tem uma conta?</p>
-            <a href="/loja/cadastro"><button class="cadasto_btn" >Cadastre sua loja</button></a>
+            <p th:text="#{semConta}">Ainda não tem uma conta?</p>
+            <a href="/loja/cadastro"><button class="cadasto_btn"  th:text="#{botaoCadastro}">Cadastre sua loja</button></a>
         </div>
     </div>
     <div class="login-form">
-        <h2>Login</h2>
+        <h2 th:text="#{titulo}">Login</h2>
         <form th:action="@{/login}" method="post">
             <div class="form-group">
-                <label for="username">E-mail:</label>
+                <label for="username" th:text="#{loginEmail}">E-mail:</label>
                 <input type="email" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="senha">Senha:</label>
+                <label for="senha" th:text="#{loginSenha}">Senha:</label>
                 <input type="password" id="senha" name="password" required>
             </div>
             <div class="error-message" th:if="${param.error}">
-                <p>Usuário ou senha inválidos</p>
+                <p th:text="#{erroLogin}">Usuário ou senha inválidos</p>
             </div>
-            <input type="submit" value="Entrar">
-            <a href="#">Esqueceu a senha?</a>
+            <input type="submit" th:value="#{botaoEntrar}">
+            <a href="#" th:text="#{esqueceuSenha}">Esqueceu a senha?</a>
         </form>
     </div>
 </div>
