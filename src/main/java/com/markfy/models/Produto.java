@@ -27,6 +27,14 @@ public class Produto {
     @JsonIgnore
     private Loja loja;
 
+    public Produto(String nome, Float valor, String marca, TamanhoEnum tamanho, Integer estoque) {
+        this.nome = nome;
+        this.valor = valor;
+        this.marca = marca;
+        this.tamanho = tamanho;
+        this.estoque = estoque;
+    }
+
     public Produto(CadastroProdutoDTO cadastroProdutoDTO, Loja loja) {
         this.nome = cadastroProdutoDTO.nomeProduto();
         this.valor = cadastroProdutoDTO.valorProduto();

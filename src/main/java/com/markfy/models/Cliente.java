@@ -33,6 +33,19 @@ public class Cliente {
     @ManyToOne
     private Loja loja;
 
+    public Cliente(String nomeCliente, String sobrenomeCliente, String emailCliente, LocalDate dataDeNasciemto, SexoEnum sexo, String cpf, EstadoCivilEnum estadoCivil, NivelEducacionalEnum nivelEducacional, Float rendaAnual, OcupacaoEnum ocupacao) {
+        this.nomeCliente = nomeCliente;
+        this.sobrenomeCliente = sobrenomeCliente;
+        this.emailCliente = emailCliente;
+        this.dataDeNasciemto = dataDeNasciemto;
+        this.sexo = sexo;
+        this.cpf = cpf;
+        this.estadoCivil = estadoCivil;
+        this.nivelEducacional = nivelEducacional;
+        this.rendaAnual = rendaAnual;
+        this.ocupacao = ocupacao;
+    }
+
     public Cliente(CadastroClienteDTO cadastroClienteDTO, Loja loja) {
         this.nomeCliente = cadastroClienteDTO.nomeCliente();
         this.sobrenomeCliente = cadastroClienteDTO.sobrenomeCliente();
