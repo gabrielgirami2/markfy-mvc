@@ -3,6 +3,7 @@ package com.markfy.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.markfy.dto.cliente.ResponseOllamaDTO;
+import com.markfy.dto.ollama.OllamaResponseDTO;
 import com.markfy.models.Cliente;
 import com.markfy.models.Produto;
 import com.markfy.service.AnaliseService;
@@ -32,33 +33,69 @@ public class AnaliseController {
     @GetMapping
     public String paginaAnalise(Model model, HttpSession session){
         Long usuario = (Long) session.getAttribute("usuario");
+        if(usuario == null) return "redirect:/login";
+
         String nomeUsuario = (String) session.getAttribute("nomeUsuario");
         model.addAttribute("nomeUsuario", nomeUsuario);
 
-        if(usuario == null) return "redirect:/login";
-
         List<Produto> listaProdutos = produtoService.listarProdutosDaLojaDoUsuario(usuario);
-
         model.addAttribute("produtos", listaProdutos);
+
+        List<Cliente> listaClientes = clienteService.listarClientesDaLojaDoUsuario(usuario);
+        model.addAttribute("clientes", listaClientes);
 
         return "analise/realizar-analise";
     }
 
-    @PostMapping("/realizar")
-    public String realizarAnalise(@RequestParam("produto") Long idProduto, HttpSession session, Model model) throws JsonProcessingException {
+    @PostMapping("/produto/realizar")
+    public String realizarAnaliseProduto(@RequestParam("produto") Long idProduto, HttpSession session, Model model) {
         Long usuario = (Long) session.getAttribute("usuario");
+
         String nomeUsuario = (String) session.getAttribute("nomeUsuario");
         model.addAttribute("nomeUsuario", nomeUsuario);
 
-        List<Produto> listaProdutos = produtoService.listar();
-        model.addAttribute("produtos", listaProdutos);
+        try {
+            List<Produto> listaProdutos = produtoService.listarProdutosDaLojaDoUsuario(usuario);
+            model.addAttribute("produtos", listaProdutos);
 
-        Produto produtoSelecionado = produtoService.buscarPorId(idProduto);
-        ResponseOllamaDTO clientesAnalise = analiseService.analisar(produtoSelecionado);
+            List<Cliente> listaClientes = clienteService.listarClientesDaLojaDoUsuario(usuario);
+            model.addAttribute("clientes", listaClientes);
 
-        model.addAttribute("cliente", clientesAnalise);
+            Produto produtoSelecionado = produtoService.buscarPorId(idProduto);
+            OllamaResponseDTO resposta = analiseService.analisarProduto(produtoSelecionado, listaClientes);
+            model.addAttribute("resposta", resposta);
 
-        return "analise/realizar-analise";
+            return "analise/realizar-analise";
+        }catch (Exception e){
+            return "analise/realizar-analise";
+        }
+
+    }
+
+
+    @PostMapping("/cliente/realizar")
+    public String realizarAnaliseCliente(@RequestParam("cliente") Long idCliente, HttpSession session, Model model) {
+        Long usuario = (Long) session.getAttribute("usuario");
+
+        String nomeUsuario = (String) session.getAttribute("nomeUsuario");
+        model.addAttribute("nomeUsuario", nomeUsuario);
+
+        try {
+            List<Produto> listaProdutos = produtoService.listarProdutosDaLojaDoUsuario(usuario);
+            model.addAttribute("produtos", listaProdutos);
+
+            List<Cliente> listaClientes = clienteService.listarClientesDaLojaDoUsuario(usuario);
+            model.addAttribute("clientes", listaClientes);
+
+            Cliente clienteSelecionado = clienteService.buscarPorId(idCliente);
+            OllamaResponseDTO resposta = analiseService.analisarCliente(clienteSelecionado, listaProdutos);
+            model.addAttribute("resposta", resposta);
+
+            return "analise/realizar-analise";
+        }catch (Exception e){
+            return "analise/realizar-analise";
+        }
+
     }
 
 

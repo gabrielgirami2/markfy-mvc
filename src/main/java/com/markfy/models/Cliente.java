@@ -31,6 +31,7 @@ public class Cliente {
     private NivelEducacionalEnum nivelEducacional;
     private Float rendaAnual;
     private OcupacaoEnum ocupacao;
+
     @ManyToOne
     @JsonIgnore
     private Loja loja;
@@ -73,5 +74,22 @@ public class Cliente {
         if(alterarClienteDTO.nivelEducacional() != null ) this.nivelEducacional = alterarClienteDTO.nivelEducacional();
         if(alterarClienteDTO.rendaAnual() != null ) this.rendaAnual = alterarClienteDTO.rendaAnual();
         if(alterarClienteDTO.ocupacao() != null ) this.ocupacao = alterarClienteDTO.ocupacao();
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "ocupacao=" + ocupacao +
+                ", rendaAnual=" + rendaAnual +
+                ", nivelEducacional=" + nivelEducacional +
+                ", estadoCivil=" + estadoCivil +
+                ", cpf='" + cpf + '\'' +
+                ", sexo=" + sexo +
+                ", emailCliente='" + emailCliente + '\'' +
+                ", dataDeNasciemto=" + dataDeNasciemto +
+                ", nomeCliente='" + nomeCliente + '\'' +
+                ", idCliente=" + idCliente +
+                ", sobrenomeCliente='" + sobrenomeCliente + '\'' +
+                '}';
     }
 }

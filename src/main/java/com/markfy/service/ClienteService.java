@@ -50,4 +50,8 @@ public class ClienteService {
     public Integer contarClientes() {
         return clienteRepository.totalClientes();
     }
+
+    public Cliente buscarPorId(Long idCliente) {
+        return clienteRepository.findById(idCliente).get();
+    }
 }

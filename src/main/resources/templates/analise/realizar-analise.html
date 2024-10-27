@@ -75,33 +75,12 @@
         margin-top: 20px;
     }
 
-    .table-container {
+    .response-container {
         margin-top: 40px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        font-size: 1rem;
-    }
-
-    table, th, td {
+        padding: 20px;
         border: 1px solid #ddd;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #563d7c;
-        color: white;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
+        border-radius: 4px;
+        background-color: #f9f9f9;
     }
   </style>
 </head>
@@ -109,10 +88,10 @@
 <div th:replace="~{base :: menu(page='analises')}"></div>
 <div class="content">
   <div class="content-header">
-    <h1>Análise de Produtos</h1>
+    <h1>Análise de Produtos e Clientes</h1>
   </div>
 
-  <form action="/analise/realizar" method="post">
+  <form action="/analise/produto/realizar" method="post">
     <div class="form-group">
       <label for="produto">Selecione um Produto:</label>
       <select id="produto" name="produto" required>
@@ -126,29 +105,26 @@
     </div>
   </form>
 
-  <div class="table-container" th:if="${cliente != null}">
-    <h2>Resultados da Análise</h2>
-    <table>
-      <thead>
-      <tr>
-        <th th:text="#{cliente.nome}">Nome</th>
-        <th th:text="#{cliente.sobrenome}">Sobrenome</th>
-        <th th:text="#{cliente.email}">E-mail</th>
-        <th th:text="#{cliente.cpf}">CPF</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td th:text="${cliente.nome}">Nome do cliente</td>
-        <td th:text="${cliente.sobrenome}">Sobrenome do cliente</td>
-        <td th:text="${cliente.email}">E-mail</td>
-        <td th:text="${cliente.cpf}">CPF</td>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+  <form action="/analise/cliente/realizar" method="post">
+    <div class="form-group">
+      <label for="cliente">Selecione um Cliente:</label>
+      <select id="cliente" name="cliente" required>
+        <option value="">Escolha um cliente</option>
+        <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.nomeCliente}">Nome do Cliente</option>
+      </select>
+    </div>
 
+    <div class="form-group">
+      <input type="submit" value="Analisar" class="btn">
+    </div>
+  </form>
+
+  <div class="response-container" th:if="${resposta != null}">
+    <h2>Resultado da Análise</h2>
+    <div class="resultado">
+      <p><strong>Cliente Escolhido:</strong> <span th:text="${resposta.nomeCliente}"></span></p>
+      <p><strong>Produto:</strong> <span th:text="${resposta.nomeProduto}"></span></p>
+      <p><strong>Razões para a Escolha:</strong></p><p th:text="${resposta.motivoEscolha}"></p></div>
+</div>
 </body>
 </html>

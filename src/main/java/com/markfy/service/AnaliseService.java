@@ -3,6 +3,7 @@ package com.markfy.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.markfy.dto.cliente.ResponseOllamaDTO;
+import com.markfy.dto.ollama.OllamaResponseDTO;
 import com.markfy.models.Cliente;
 import com.markfy.models.Produto;
 import com.markfy.repository.ClienteRepository;
@@ -23,39 +24,75 @@ public class AnaliseService {
     private ChatModel chatModel;
 
     @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
 
-    public ResponseOllamaDTO analisar(Produto produto) throws JsonProcessingException {
-        List<Cliente> clientes = clienteRepository.findAll();
-        String pergunta = "Levando em consideração que tenho os seguintes clientes: "
-                + clientes
-                + ". E o seguinte produto: "
-                + produto
-                + ". Qual desses clientes é o mais provavel de comprar este produto?"
-                + " Me forneça as informações do cliente escolhido em um JSON do seguinte tipo: "
-                + "{ 'nome': string, 'sobrenome': string, 'email': string, 'cpf': string }"
-                + "Atenção! Não responda NADA além do JSON e inclua todas as propriedades (nome, sobrenome, email e cpf).";
+    public OllamaResponseDTO analisarProduto(Produto produto, List<Cliente> clientes) throws Exception {
+        String pergunta = "Você deve analisar as características dos seguintes clientes em relação ao produto "
+                + produto.getNome() + ", que tem o preço de R$ " + produto.getValor() + ".\n"
+                + "Por favor, considere os seguintes fatores ao identificar o cliente com a maior probabilidade de compra: \n"
+                + "- IDADE\n"
+                + "- Estado civil\n"
+                + "- Nível educacional\n"
+                + "- Ocupação\n"
+                + "- Renda anual\n\n"
+                + "Aqui estão os clientes:\n" + clientes + "\n"
+                + "Produto: " + produto + "\n\n"
+                + "Estruture sua análise no seguinte formato JSON: \n"
+                + "{\n"
+                + "  'nomeCliente': 'string',\n"
+                + "  'nomeProduto': 'string',\n"
+                + "  'motivoEscolha': 'string'\n"
+                + "}\n"
+                + "Onde 'motivoEscolha' deve explicar por que este produto é a melhor escolha para o cliente. Responda estritamente no formato JSON e não inclua mais nenhuma informação além disso.";
 
-        System.out.println(pergunta);
+        try {
+            ChatResponse response = chatModel.call(
+                    new Prompt(
+                            pergunta,
+                            OllamaOptions.builder()
+                                    .withModel(OllamaModel.LLAMA3_2)
+                                    .withTemperature(0.5)
+                                    .build()
+                    )
+            );
 
-        ChatResponse response = chatModel.call(
-                new Prompt(
-                        pergunta,
-                        OllamaOptions.builder()
-                                .withModel(OllamaModel.LLAMA3_2)
-                                .withTemperature(0.4)
-                                .build()
-                )
-        );
+            System.out.println("Resposta do Ollama: \n" + response.getResult().getOutput().getContent());
+            return objectMapper.readValue(response.getResult().getOutput().getContent(), OllamaResponseDTO.class);
+        }catch (Exception e){
+            throw new Exception("Ocorreu um erro ao realzar a análise: " + e.getMessage());
+        }
+    }
 
-        System.out.println("Resposta do Ollama: " + response.getResult().getOutput().getContent());
+    public OllamaResponseDTO analisarCliente(Cliente cliente, List<Produto> produtos) throws Exception {
+        String pergunta = "Você deve analisar as características do seguinte cliente:\n"
+                + cliente + "\n\n"
+                + "E os seguintes produtos disponíveis:\n"
+                + produtos + "\n\n"
+                + "Com base nas características do cliente, como IDADE, estado civil, nível educacional, ocupação e renda anual, me forneça o produto que melhor combina com o cliente acima.\n"
+                + "Estruture sua resposta no seguinte formato JSON:\n"
+                + "{\n"
+                + "  'nomeCliente': 'string',\n"
+                + "  'nomeProduto': 'string',\n"
+                + "  'motivoEscolha': 'string'\n"
+                + "}\n"
+                + "Onde 'motivoEscolha' deve explicar por que este produto é a melhor escolha para o cliente. Responda estritamente no formato JSON e não inclua mais nenhuma informação além disso.";
 
-        ResponseOllamaDTO responseOllamaDTO = objectMapper.readValue(response.getResult().getOutput().getContent(), ResponseOllamaDTO.class);
+        try {
+            ChatResponse response = chatModel.call(
+                    new Prompt(
+                            pergunta,
+                            OllamaOptions.builder()
+                                    .withModel(OllamaModel.LLAMA3_2)
+                                    .withTemperature(0.5)
+                                    .build()
+                    )
+            );
 
-        return responseOllamaDTO;
+            System.out.println("Resposta do Ollama: \n" + response.getResult().getOutput().getContent());
+            return objectMapper.readValue(response.getResult().getOutput().getContent(), OllamaResponseDTO.class);
+        }catch (Exception e){
+            throw new Exception("Ocorreu um erro ao realzar a análise: " + e.getMessage());
+        }
     }
 }
