@@ -1,3 +1,7 @@
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management </br>
+docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama </br>
+docker exec -it ollama ollama run llama3.2 </br>
+
 # Vídeo de Demonstração
 
 Confira abaixo o vídeo de demonstração da aplicação no YouTube:
