@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(
                                 "/",
+                                "/actuator/**",
                                 "/loja/cadastro",
                                 "/loja/cadastrar",
                                 "/login"
