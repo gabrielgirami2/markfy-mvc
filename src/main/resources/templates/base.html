@@ -96,7 +96,7 @@
     <a th:classappend="${page == 'home'} ? 'active'" href="/home"><i class="fas fa-home"></i><span th:text="#{menu.principal}">Principal</span></a>
     <a th:classappend="${page == 'clientes'} ? 'active'" href="/cliente"><i class="fas fa-users"></i><span th:text="#{menu.clientes}">Clientes</span></a>
     <a th:classappend="${page == 'produtos'} ? 'active'" href="/produto"><i class="fas fa-box"></i><span th:text="#{menu.produtos}">Produtos</span></a>
-    <a th:classappend="${page == 'analises'} ? 'active'" href="#"><i class="fas fa-chart-line"></i><span th:text="#{menu.analises}">Análises</span></a>
+    <a th:classappend="${page == 'analises'} ? 'active'" href="/analise"><i class="fas fa-chart-line"></i><span th:text="#{menu.analises}">Análises</span></a>
     <a th:classappend="${page == 'minha_loja'} ? 'active'" href="/loja"><i class="fas fa-store"></i><span th:text="#{menu.minhaLoja}">Minha Loja</span></a>
 
     <div class="logout">

@@ -1,5 +1,6 @@
 package com.markfy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.markfy.dto.cliente.AlterarClienteDTO;
 import com.markfy.dto.cliente.CadastroClienteDTO;
 import com.markfy.models.enums.EstadoCivilEnum;
@@ -31,6 +32,7 @@ public class Cliente {
     private Float rendaAnual;
     private OcupacaoEnum ocupacao;
     @ManyToOne
+    @JsonIgnore
     private Loja loja;
 
     public Cliente(String nomeCliente, String sobrenomeCliente, String emailCliente, LocalDate dataDeNasciemto, SexoEnum sexo, String cpf, EstadoCivilEnum estadoCivil, NivelEducacionalEnum nivelEducacional, Float rendaAnual, OcupacaoEnum ocupacao) {

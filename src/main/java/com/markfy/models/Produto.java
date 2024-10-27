@@ -51,4 +51,16 @@ public class Produto {
         if(alterarProdutoDTO.tamanhoProduto() != null) this.tamanho = TamanhoEnum.valueOf(alterarProdutoDTO.tamanhoProduto());
         if(alterarProdutoDTO.estoque() != null) this.estoque = alterarProdutoDTO.estoque();
     }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "idProduto=" + idProduto +
+                ", nome='" + nome + '\'' +
+                ", valor=" + valor +
+                ", marca='" + marca + '\'' +
+                ", tamanho=" + tamanho +
+                ", estoque=" + estoque +
+                '}';
+    }
 }

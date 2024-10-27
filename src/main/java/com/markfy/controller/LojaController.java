@@ -1,22 +1,18 @@
 package com.markfy.controller;
 
-import com.markfy.dto.cliente.CadastroClienteDTO;
 import com.markfy.dto.loja.AlterarLojaDTO;
 import com.markfy.dto.loja.CadastroLojaDTO;
 import com.markfy.dto.loja.CadastroLojaUsuarioDTO;
 import com.markfy.dto.usuario.AlterarUsuarioDTO;
-import com.markfy.dto.usuario.CadastroUsuarioDTO;
-import com.markfy.dto.usuario.UsuarioLoginDTO;
 import com.markfy.models.Loja;
-import com.markfy.models.Usuario;
-import com.markfy.repository.UsuarioRepository;
 import com.markfy.service.LojaService;
 import com.markfy.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,14 +27,26 @@ public class LojaController {
     @Autowired
     private LojaService lojaService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping
     @Transactional
     public String minhaLoja(@ModelAttribute AlterarLojaDTO alterarLojaDTO, AlterarUsuarioDTO alterarUsuarioDTO, HttpSession session, Model model){
         Long usuario = (Long) session.getAttribute("usuario");
+
+        if(usuario == null) return "redirect:/login";
+
         String nomeUsuario = (String) session.getAttribute("nomeUsuario");
         model.addAttribute("nomeUsuario", nomeUsuario);
 
-        if(usuario == null) return "redirect:/login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userRole = authentication.getAuthorities().stream()
+                .map(auth -> auth.getAuthority())
+                .findFirst()
+                .orElse("ROLE_USER");
+
+        model.addAttribute("userRole", userRole);
 
         Loja loja = lojaService.buscarLojaPorIdUsuario(usuario);
         model.addAttribute("loja", loja);

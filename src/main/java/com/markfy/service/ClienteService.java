@@ -47,4 +47,7 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
+    public Integer contarClientes() {
+        return clienteRepository.totalClientes();
+    }
 }

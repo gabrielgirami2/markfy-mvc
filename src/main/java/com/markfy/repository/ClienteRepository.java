@@ -13,4 +13,7 @@ import java.util.List;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("SELECT c FROM Cliente c WHERE c.loja.idLoja = :idLoja")
     List<Cliente> findClientesByLojaId(@Param("idLoja") Long idLoja);
+
+    @Query("SELECT COUNT(c) FROM Cliente c")
+    Integer totalClientes();
 }

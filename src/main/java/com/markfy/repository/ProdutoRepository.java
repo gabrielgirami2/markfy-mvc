@@ -12,4 +12,7 @@ import java.util.List;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query("SELECT p FROM Produto p WHERE p.loja.idLoja = :idLoja")
     List<Produto> findProdutosByLojaId(@Param("idLoja") Long idLoja);
+
+    @Query("SELECT COUNT(p) FROM Produto p")
+    Integer totalProdutos();
 }

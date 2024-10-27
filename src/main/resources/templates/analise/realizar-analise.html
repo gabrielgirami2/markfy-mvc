@@ -1,161 +1,154 @@
-<!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Loja - Markfy</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
+  <head th:replace="~{base :: head}"></head>
   <style>
-    body {
-        font-family: 'Roboto', sans-serif;
+    .content {
         margin: 0;
-        padding: 0;
-        background-color: #fff;
-        color: #000;
+        font-family: Arial, sans-serif;
+        margin-left: 280px;
+        padding: 20px;
     }
 
-    .logo-container {
-        background-color: #000;
-        color: #fff;
-        border-bottom: 4px solid #563d7c;
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
     }
 
-    .logo {
-        font-family: 'Oswald', sans-serif;
-        font-size: 2.5rem;
-        color: #fff;
+    .content-header h1 {
+        margin: 0;
     }
 
-    a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: none;
-        color: #563d7c;
-    }
-
-    /* Section Form */
-    .form-section {
-        padding: 50px 0;
-        background-color: #f8f9fa;
-    }
-
-    .form-section h2 {
-        font-family: 'Oswald', sans-serif;
-        color: #563d7c;
-        font-size: 2.5rem;
-        margin-bottom: 30px;
-    }
-
-    .form-section .form-control {
-        border-radius: 10px;
-        padding: 10px;
-    }
-
-    .form-section .btn-primary {
+    .btn {
         background-color: #563d7c;
-        border-color: #563d7c;
-        padding: 10px 30px;
-        border-radius: 30px;
-    }
-
-    .form-section .btn-primary:hover {
-        background-color: #452a65;
-        border-color: #452a65;
-    }
-
-    .footer {
-        background-color: #000;
         color: #fff;
-        padding: 30px 0;
+        border: none;
+        padding: 10px 20px;
         text-align: center;
-        border-top: 4px solid #563d7c;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    .footer a {
-        color: #563d7c;
+    .btn:hover {
+        background-color: #452a5e;
     }
 
-    .footer a:hover {
-        color: #ddd;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .form-group select {
+        padding: 16px;
+    }
+
+    .form-group input[type="submit"] {
+        background-color: #563d7c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100px;
+        align-self: self-end;
+    }
+
+    .form-group input[type="submit"]:hover {
+        background-color: #452a5e;
+    }
+
+    .product-list {
+        margin-top: 20px;
+    }
+
+    .table-container {
+        margin-top: 40px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 1rem;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #563d7c;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
     }
   </style>
 </head>
 <body>
+<div th:replace="~{base :: menu(page='analises')}"></div>
+<div class="content">
+  <div class="content-header">
+    <h1>Análise de Produtos</h1>
+  </div>
 
-<div class="logo-container mb-3 p-4 d-flex justify-content-between align-items-center">
-  <a href="/" class="logo">Markfy</a>
-  <div>
-    <a href="/login" class="btn btn-outline-light" th:text="#{login.console}">Entrar no Console</a>
+  <form action="/analise/realizar" method="post">
+    <div class="form-group">
+      <label for="produto">Selecione um Produto:</label>
+      <select id="produto" name="produto" required>
+        <option value="">Escolha um produto</option>
+        <option th:each="produto : ${produtos}" th:value="${produto.idProduto}" th:text="${produto.nome}">Nome do Produto</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" value="Analisar" class="btn">
+    </div>
+  </form>
+
+  <div class="table-container" th:if="${cliente != null}">
+    <h2>Resultados da Análise</h2>
+    <table>
+      <thead>
+      <tr>
+        <th th:text="#{cliente.nome}">Nome</th>
+        <th th:text="#{cliente.sobrenome}">Sobrenome</th>
+        <th th:text="#{cliente.email}">E-mail</th>
+        <th th:text="#{cliente.cpf}">CPF</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td th:text="${cliente.nome}">Nome do cliente</td>
+        <td th:text="${cliente.sobrenome}">Sobrenome do cliente</td>
+        <td th:text="${cliente.email}">E-mail</td>
+        <td th:text="${cliente.cpf}">CPF</td>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<section class="form-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <h2 th:text="#{register.store.title}">Cadastre sua Loja</h2>
-        <form  th:object="${cadastroLojaUsuarioDTO}" action="/loja/cadastrar" method="post">
-          <div class="mb-3">
-            <label for="nome" class="form-label" th:text="#{store.create.name}">Nome da Loja</label>
-            <input type="text" class="form-control" id="nome" th:field="*{nomeLoja}" th:placeholder="#{store.name.placeholder}" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="cnpj" class="form-label" th:text="#{store.create.cnpj}">CNPJ</label>
-            <input type="text" class="form-control" id="cnpj" th:field="*{cnpj}" th:placeholder="#{store.cnpj.placeholder}" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="nomeUsuario" class="form-label" th:text="#{user.firstName}">Nome do Usuário</label>
-            <input type="text" class="form-control" id="nomeUsuario" th:field="*{nomeUsuario}" th:placeholder="#{user.firstName.placeholder}" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="sobrenomeUsuario" class="form-label" th:text="#{user.lastName}">Sobrenome do Usuário</label>
-            <input type="text" class="form-control" id="sobrenomeUsuario" th:field="*{sobrenomeUsuario}" th:placeholder="#{user.lastName.placeholder}" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="emailUsuario" class="form-label" th:text="#{user.email}">Email</label>
-            <input type="email" class="form-control" id="emailUsuario" th:field="*{emailUsuario}" th:placeholder="#{user.email.placeholder}" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="senha#" class="form-label" th:text="#{user.password}">Senha</label>
-            <input type="password" class="form-control" id="senha#" th:placeholder="#{user.password.placeholder}" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="senha" class="form-label" th:text="#{user.password.confirm}">Confirme a senha</label>
-            <input type="password" class="form-control" id="senha" th:field="*{senha}" th:placeholder="#{user.password.confirm.placeholder}" required>
-          </div>
-
-          <!-- Botão Enviar -->
-          <button type="submit" class="btn btn-primary" th:text="#{register.store.button}">Cadastrar Loja</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <p>&copy; 2024 Markfy. <span th:text="#{footer.rights}">Todos os direitos reservados.</span></p>
-  <p>
-    <a href="#" th:text="#{footer.terms}">Termos de Serviço</a> |
-    <a href="#" th:text="#{footer.privacy}">Política de Privacidade</a>
-  </p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

@@ -1,5 +1,6 @@
 package com.markfy.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.markfy.dto.produto.AlterarProdutoDTO;
 import com.markfy.dto.produto.CadastroProdutoDTO;
 import com.markfy.models.Produto;
@@ -41,7 +42,7 @@ public class ProdutoController {
 
     @PostMapping("/cadastrar")
     @Transactional
-    public String novo(@Valid CadastroProdutoDTO cadastroProdutoDTO, HttpSession session, Model model){
+    public String novo(@Valid CadastroProdutoDTO cadastroProdutoDTO, HttpSession session, Model model) throws JsonProcessingException {
         Long idUsuario = (Long) session.getAttribute("usuario");
 
         if(idUsuario == null){

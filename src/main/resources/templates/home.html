@@ -1,9 +1,189 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <title>Markfy - Home</title>
     <head th:replace="~{base :: head}"></head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; /* Cor de fundo mais suave */
+        }
+
+        .content {
+            margin-left: 280px;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #333; /* Cor do texto mais escura */
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            color: #563d7c; /* Cor do título */
+        }
+
+        .card p {
+            font-size: 1.2rem;
+            margin: 0;
+            color: #666; /* Cor do texto */
+        }
+
+        .feedbacks, .links-uteis, .dicas-marketing {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feedbacks ul, .links-uteis ul, .dicas-marketing ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feedbacks li, .links-uteis li, .dicas-marketing li {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedbacks h2, .links-uteis h2, .dicas-marketing h2 {
+            margin: 0 0 10px;
+            color: #563d7c; /* Cor do título */
+        }
+
+        .footer {
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feedback-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            resize: vertical; /* Permite redimensionar verticalmente */
+        }
+
+        .submit-feedback {
+            padding: 10px;
+            background-color: #563d7c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-feedback:hover {
+            background-color: #462c68; /* Cor mais escura ao passar o mouse */
+        }
+
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 4px solid #563d7c;
+        }
+
+        .footer a {
+            color: #563d7c;
+        }
+
+        .footer a:hover {
+            color: #ddd;
+        }
+
+    </style>
 </head>
 <body>
-    <div th:replace="~{base :: menu(page='home')}"></div>
+<div th:replace="~{base :: menu(page='home')}"></div>
+<div class="content">
+    <div class="header">
+        <h1>Página Inicial</h1>
+    </div>
+
+    <div class="dicas-marketing card">
+        <h2>Dicas do dia</h2>
+        <ul>
+            <li>Use a segmentação para campanhas mais eficazes.</li>
+            <li>Otimize seu conteúdo para SEO e atraia mais visitantes.</li>
+            <li>Experimente anúncios A/B para melhorar conversões.</li>
+        </ul>
+    </div>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+        <div class="card" style="flex-grow: 1;">
+            <h2>Total de Produtos</h2>
+            <p th:text="${totalProdutos}">0</p>
+        </div>
+    
+        <div class="card" style="flex-grow: 1;">
+            <h2>Total de Clientes</h2>
+            <p th:text="${totalClientes}">0</p>
+        </div>
+    </div>
+    
+   
+
+    <div class="feedbacks card">
+        <h2>Feedbacks sobre a Plataforma</h2>
+        <ul>
+            <li>Ótima experiência de uso! - Usuário 1</li>
+            <li>A plataforma é intuitiva e fácil de navegar. - Usuário 2</li>
+            <li>Precisa de mais opções de personalização. - Usuário 3</li>
+        </ul>
+    </div>
+
+    <div class="links-uteis card">
+        <h2>Links Úteis</h2>
+        <ul>
+            <li><a href="#">Suporte</a></li>
+            <li><a href="#">Documentação</a></li>
+            <li><a href="#">Fórum de Discussão</a></li>
+            <li><a href="#">Blog de Atualizações</a></li>
+        </ul>
+    </div>
+
+    <div class="feedback-form card">
+        <h2>Deixe seu Feedback</h2>
+        <textarea class="feedback-input" rows="4" placeholder="Compartilhe sua experiência..."></textarea>
+        <button class="submit-feedback">Enviar Feedback</button>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Markfy. <span th:text="#{copyright}">Todos os direitos reservados.</span></p>
+        <p><a href="#" th:text="#{linkCopyright1}">Termos de Serviço</a> | <a href="#" th:text="#{linkCopyright2}">Política de Privacidade</a></p>
+    </footer>
+</div>
 </body>
 </html>

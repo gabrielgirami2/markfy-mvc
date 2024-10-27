@@ -170,6 +170,14 @@
             align-items: center;
             margin-bottom: 20px;
         }
+
+        .btn.disabled {
+            background-color: #ccc;  /* Cor de fundo acinzentada */
+            color: #666;  /* Cor do texto mais clara */
+            cursor: not-allowed;  /* Indica que a ação não é permitida */
+            pointer-events: none;  /* Desativa eventos de clique */
+        }
+
     </style>
 </head>
 <body>
@@ -177,7 +185,12 @@
 <div class="content">
     <div class="content-header">
         <h1 th:text="#{store.title}">Minha Loja</h1>
-        <button class="btn" id="editStoreBtn" th:text="#{store.edit}">Editar Loja</button>
+        <button class="btn" id="editStoreBtn"
+                th:classappend="${userRole != 'ROLE_ADMIN'} ? 'disabled' : ''"
+                th:attr="disabled=${userRole != 'ROLE_ADMIN'}"
+                th:text="#{store.edit}">
+            Editar Loja
+        </button>
     </div>
 
     <div class="store-info">
@@ -187,7 +200,11 @@
 
     <div class="usuarios">
         <h2 th:text="#{store.users}">Usuários da Loja</h2>
-        <a href="#" class="btn" id="addUserBtn" th:text="#{store.addUser}">Adicionar Usuário</a>
+        <a href="#" class="btn" id="addUserBtn" th:text="#{store.addUser}"
+           th:classappend="${userRole != 'ROLE_ADMIN'} ? 'disabled' : ''"
+           th:attr="disabled=${userRole != 'ROLE_ADMIN'}">
+            Adicionar Usuário
+        </a>
     </div>
     <div>
         <table>
@@ -208,13 +225,17 @@
                 <td th:text="${usuario.roles}">Email</td>
                 <td class="action-btns">
                     <button class="btn edit-user-btn"
+                            th:classappend="${userRole != 'ROLE_ADMIN'} ? 'disabled' : ''"
                             th:attr="data-id=${usuario.idUsuario},
-                                     data-nome=${usuario.nomeUsuario},
-                                     data-sobrenome=${usuario.sobrenomeUsuario},
-                                     data-email=${usuario.emailUsuario}">
+                                 data-nome=${usuario.nomeUsuario},
+                                 data-sobrenome=${usuario.sobrenomeUsuario},
+                                 data-email=${usuario.emailUsuario},
+                                 disabled=${userRole != 'ROLE_ADMIN'}">
                         <i class="fas fa-edit" th:attr="title=#{store.editUser}"></i>
                     </button>
-                    <button class="btn delete-user-btn" th:attr="data-id=${usuario.idUsuario}">
+                    <button class="btn delete-user-btn"
+                            th:classappend="${userRole != 'ROLE_ADMIN'} ? 'disabled' : ''"
+                            th:attr="data-id=${usuario.idUsuario}, disabled=${userRole != 'ROLE_ADMIN'}">
                         <i class="fas fa-trash-alt" th:attr="title=#{store.deleteUser}"></i>
                     </button>
                 </td>
@@ -224,7 +245,6 @@
     </div>
 </div>
 
-<!-- Modal para Edição da Loja -->
 <div id="editStoreModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeEditStoreModal">&times;</span>
@@ -245,7 +265,6 @@
     </div>
 </div>
 
-<!-- Modal para Adição e Edição de Usuário -->
 <div id="userModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeUserModal">&times;</span>
@@ -274,7 +293,6 @@
     </div>
 </div>
 
-<!-- Modal para Exclusão de Usuário -->
 <div id="deleteUserModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeDeleteUserModal">&times;</span>
