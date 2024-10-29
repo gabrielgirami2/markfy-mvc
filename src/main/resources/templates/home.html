@@ -129,60 +129,58 @@
 <div th:replace="~{base :: menu(page='home')}"></div>
 <div class="content">
     <div class="header">
-        <h1>Página Inicial</h1>
+        <h1 th:text="#{page.home}">Página Inicial</h1>
     </div>
 
     <div class="dicas-marketing card">
-        <h2>Dicas do dia</h2>
+        <h2 th:text="#{tips.title}">Dicas do dia</h2>
         <ul>
-            <li>Use a segmentação para campanhas mais eficazes.</li>
-            <li>Otimize seu conteúdo para SEO e atraia mais visitantes.</li>
-            <li>Experimente anúncios A/B para melhorar conversões.</li>
+            <li th:text="#{tips.marketing1}">Use a segmentação para campanhas mais eficazes.</li>
+            <li th:text="#{tips.marketing2}">Otimize seu conteúdo para SEO e atraia mais visitantes.</li>
+            <li th:text="#{tips.marketing3}">Experimente anúncios A/B para melhorar conversões.</li>
         </ul>
     </div>
 
     <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
         <div class="card" style="flex-grow: 1;">
-            <h2>Total de Produtos</h2>
+            <h2 th:text="#{products.total}">Total de Produtos</h2>
             <p th:text="${totalProdutos}">0</p>
         </div>
-    
+
         <div class="card" style="flex-grow: 1;">
-            <h2>Total de Clientes</h2>
+            <h2 th:text="#{clients.total}">Total de Clientes</h2>
             <p th:text="${totalClientes}">0</p>
         </div>
     </div>
-    
-   
 
     <div class="feedbacks card">
-        <h2>Feedbacks sobre a Plataforma</h2>
+        <h2 th:text="#{feedback.title}">Feedbacks sobre a Plataforma</h2>
         <ul>
-            <li>Ótima experiência de uso!</li>
-            <li>A plataforma é intuitiva e fácil de navegar.</li>
-            <li>Precisa de mais opções de personalização.</li>
+            <li th:text="#{feedback.comment1}">Ótima experiência de uso!</li>
+            <li th:text="#{feedback.comment2}">A plataforma é intuitiva e fácil de navegar.</li>
+            <li th:text="#{feedback.comment3}">Precisa de mais opções de personalização.</li>
         </ul>
     </div>
 
     <div class="links-uteis card">
-        <h2>Links Úteis</h2>
+        <h2 th:text="#{links.title}">Links Úteis</h2>
         <ul>
-            <li><a href="#">Suporte</a></li>
-            <li><a href="#">Documentação</a></li>
-            <li><a href="#">Fórum de Discussão</a></li>
-            <li><a href="#">Blog de Atualizações</a></li>
+            <li><a href="#" th:text="#{links.support}">Suporte</a></li>
+            <li><a href="#" th:text="#{links.documentation}">Documentação</a></li>
+            <li><a href="#" th:text="#{links.forum}">Fórum de Discussão</a></li>
+            <li><a href="#" th:text="#{links.blog}">Blog de Atualizações</a></li>
         </ul>
     </div>
 
     <div class="feedback-form card">
-        <h2>Deixe seu Feedback</h2>
-        <textarea class="feedback-input" rows="4" placeholder="Compartilhe sua experiência..."></textarea>
-        <button class="submit-feedback">Enviar Feedback</button>
+        <h2 th:text="#{feedback.leave}">Deixe seu Feedback</h2>
+        <textarea class="feedback-input" rows="4" placeholder="#{feedback.placeholder}">Compartilhe sua experiência...</textarea>
+        <button class="submit-feedback" th:text="#{feedback.submit}">Enviar Feedback</button>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2024 Markfy. <span th:text="#{copyright}">Todos os direitos reservados.</span></p>
-        <p><a href="#" th:text="#{linkCopyright1}">Termos de Serviço</a> | <a href="#" th:text="#{linkCopyright2}">Política de Privacidade</a></p>
+        <p>&copy; 2024 Markfy. <span th:text="#{copyright.home}">Todos os direitos reservados.</span></p>
+        <p><a href="#" th:text="#{linkCopyright1.home}">Termos de Serviço</a> | <a href="#" th:text="#{linkCopyright2.home}">Política de Privacidade</a></p>
     </footer>
 </div>
 </body>

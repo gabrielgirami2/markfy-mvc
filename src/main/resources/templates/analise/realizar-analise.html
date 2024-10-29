@@ -88,43 +88,48 @@
 <div th:replace="~{base :: menu(page='analises')}"></div>
 <div class="content">
   <div class="content-header">
-    <h1>Análise de Produtos e Clientes</h1>
+    <h1 th:text="#{analysis.title}">Análise de Produtos e Clientes</h1>
   </div>
 
   <form action="/analise/produto/realizar" method="post">
     <div class="form-group">
-      <label for="produto">Selecione um Produto:</label>
+      <label for="produto" th:text="#{product.select}">Selecione um Produto:</label>
       <select id="produto" name="produto" required>
-        <option value="">Escolha um produto</option>
+        <option value="" th:text="#{product.choose}">Escolha um produto</option>
         <option th:each="produto : ${produtos}" th:value="${produto.idProduto}" th:text="${produto.nome}">Nome do Produto</option>
       </select>
     </div>
 
     <div class="form-group">
-      <input type="submit" value="Analisar" class="btn">
+      <input type="submit" th:value="#{product.analyze}" class="btn">
     </div>
   </form>
 
   <form action="/analise/cliente/realizar" method="post">
     <div class="form-group">
-      <label for="cliente">Selecione um Cliente:</label>
+      <label for="cliente" th:text="#{client.select}">Selecione um Cliente:</label>
       <select id="cliente" name="cliente" required>
-        <option value="">Escolha um cliente</option>
+        <option value="" th:text="#{client.choose}">Escolha um cliente</option>
         <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.nomeCliente}">Nome do Cliente</option>
       </select>
     </div>
 
     <div class="form-group">
-      <input type="submit" value="Analisar" class="btn">
+      <input type="submit" th:value="#{client.analyze}" class="btn">
     </div>
   </form>
 
   <div class="response-container" th:if="${resposta != null}">
-    <h2>Resultado da Análise</h2>
+    <h2 th:text="#{analysis.result}">Resultado da Análise</h2>
     <div class="resultado">
-      <p><strong>Cliente Escolhido:</strong> <span th:text="${resposta.nomeCliente}"></span></p>
-      <p><strong>Produto:</strong> <span th:text="${resposta.nomeProduto}"></span></p>
-      <p><strong>Razões para a Escolha:</strong></p><p th:text="${resposta.motivoEscolha}"></p></div>
+      <p><strong th:text="#{analysis.selectedClient}">Cliente Escolhido:</strong> <span th:text="${resposta.nomeCliente}"></span></p>
+      <p><strong th:text="#{analysis.product}">Produto:</strong> <span th:text="${resposta.nomeProduto}"></span></p>
+      <p><strong th:text="#{analysis.reasons}">Razões para a Escolha:</strong></p>
+      <p th:text="${resposta.motivoEscolha}"></p>
+    </div>
+  </div>
 </div>
 </body>
+</html>
+
 </html>
