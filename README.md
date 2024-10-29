@@ -1,101 +1,51 @@
-docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management </br>
-docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama </br>
-docker exec -it ollama ollama run llama3.2 </br>
+# Markfy
 
-# Vídeo de Demonstração
-
-Confira abaixo o vídeo de demonstração da aplicação no YouTube:
-
-[Assista ao vídeo de demonstração no YouTube](https://www.youtube.com/watch?v=hc2LBvjBTe4&t=4s)
+## Descrição do Projeto
+**Markfy** é um sistema desenvolvido para gerenciar clientes, produtos e realizar análises de marketing de lojas de roupas. A aplicação utiliza Java com Spring MVC e integra-se a contêineres Docker para fornecer suporte a serviços adicionais essenciais para o funcionamento do sistema.
 
 ---
 
-# Código Fonte (Deploy)
+## Integrantes
+- Kayque Lima - RM550782
+- Gabriel França - RM551905
+- Bruno Francisco - RM552226
+- Edward de Lima - RM98676
 
-Utilizamos uma organização no GitHub para o versionamento dos códigos, abaixo disponibilizamos o link do repositório da aplicação principal:
-
-[GitHub - MarkfySoftware/markfy-mvc](https://github.com/MarkfySoftware/markfy-mvc)
-
-O Deploy foi feito utilizando o serviço “Spring Apps” da Azure. Abaixo descrevemos o passo a passo para implantação do sistema no ambiente Cloud:
-
-### No console da Azure:
-
-1. Crie um grupo de recursos com o nome **markfy**
-2. Selecione o serviço **Spring Apps**, nomeie como **markfy** e provisione
-3. Entre na instância e crie um aplicativo que rode com o **Java 21**, o nome do aplicativo deve ser **prod**
-
-### No terminal da sua máquina:
-
-1. Clone o repositório usando o comando:
-
-    ```bash
-    git clone https://github.com/MarkfySoftware/markfy-mvc.git
-    ```
-
-2. Efetue a autenticação na Azure com o comando:
-
-    ```bash
-    az login
-    ```
-
-3. Entre na pasta criada pela clonagem do repositório:
-
-    ```bash
-    cd markfy-mvc
-    ```
-
-4. Gere o .JAR da aplicação com o comando: (certifique-se de ter o Maven instalado)
-
-    ```bash
-    mvn clean package
-    ```
-
-5. Rode o comando responsável por implantar o .JAR no ambiente da Azure:
-
-    ```bash
-    az spring app deploy -s markfy -g markfy -n prod --artifact-path target/markyfy-mvc-0.0.1-SNAPSHOT.jar
-    ```
-
-### No console da Azure:
-
-Após o término da implantação, entre no aplicativo e selecione a opção **"Atribuir ponto de entrada"**.
-
-### Link do deploy já realizado pela equipe:
-
-[Markfy - Transforme seu Negócio](https://markfy.gentlemushroom-4572ad2a.eastus.azurecontainerapps.io/)
+## Nome do Grupo
+Markfy
 
 ---
 
-# Código Fonte (Execução)
+## Código Fonte
+O código-fonte do projeto pode ser encontrado neste repositório. Certifique-se de clonar o repositório e seguir as instruções para rodar a aplicação localmente.
 
-Para a execução da aplicação em ambiente local siga os seguintes passos:
+## Instruções de Instalação e Execução
 
-### No terminal da sua máquina:
+### Pré-requisitos
+- Java 21 ou superior
+- Maven
+- Docker e Docker Compose
 
-1. Clone o repositório:
+### Passos para Rodar Localmente
+1. **Clonar o Repositório**
+   ```bash
+   git clone https://github.com/MarkfySoftware/markfy-mvc.git
+   cd Markfy
 
-    ```bash
-    git clone https://github.com/MarkfySoftware/markfy-mvc.git
-    ```
+2. **Configuração dos Contêineres Docker** Execute os seguintes comandos para iniciar os serviços necessários:
+   ```bash
+   docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management
+   docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+   docker exec -it ollama ollama run llama3.2
 
-2. Entre na pasta gerada:
+3. **Compilar e Executar o Projeto** No diretório do projeto, compile e execute a aplicação:
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
 
-    ```bash
-    cd markfy-mvc
-    ```
+4. **Acessar a Aplicação**
+   - A aplicação estará disponível em ``http://localhost:8080``
 
-3. Instale as dependências necessárias: (certifique-se de ter o Maven instalado)
+## Link do Vídeo de Demonstração
 
-    ```bash
-    mvn clean install
-    ```
-
-4. Após a instalação, rode o comando abaixo para subir a aplicação:
-
-    ```bash
-    mvn spring-boot:run
-    ```
-
-5. Com a aplicação no ar, vá até seu navegador e acesse o endereço: [http://localhost:8080/](http://localhost:8080/)
-
-Sinta-se à vontade para navegar pela aplicação! :wink:
+Assista à apresentação e demonstração do projeto [neste link](http://olá)
