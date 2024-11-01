@@ -16,6 +16,19 @@ Markfy
 
 ---
 
+## Tecnologias Utilizadas
+- Java 17
+- Spring Boot
+- Spring MVC
+- Spring Security
+- Thymeleaf
+- RabbitMQ
+- Docker
+- Spring Boot Actuator
+- Spring AI
+- Ollama 3.2
+
+
 ## Código Fonte
 O código-fonte do projeto pode ser encontrado neste repositório. Certifique-se de clonar o repositório e seguir as instruções para rodar a aplicação localmente.
 
