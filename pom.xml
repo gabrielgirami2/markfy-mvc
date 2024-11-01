@@ -13,7 +13,6 @@
 	<groupId>com.markfy</groupId>
 	<artifactId>markfy-mvc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging> <!-- Alterado para gerar um .war -->
 	<name>markfy-mvc</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -92,14 +91,6 @@
 			<artifactId>spring-rabbit-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Tomcat para suporte a WAR -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 	</dependencies>
 
 	<dependencyManagement>
