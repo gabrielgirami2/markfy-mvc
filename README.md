@@ -48,4 +48,4 @@ O código-fonte do projeto pode ser encontrado neste repositório. Certifique-se
 
 ## Link do Vídeo de Demonstração
 
-Assista à apresentação e demonstração do projeto [neste link](http://olá)
+Assista à apresentação e demonstração do projeto [neste link](https://www.youtube.com/watch?v=hni0FALGMM0)
