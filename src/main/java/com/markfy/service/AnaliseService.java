@@ -27,6 +27,9 @@ public class AnaliseService {
     private ObjectMapper objectMapper;
 
 
+
+
+
     public OllamaResponseDTO analisarProduto(Produto produto, List<Cliente> clientes) throws Exception {
         String pergunta = "Você deve analisar as características dos seguintes clientes em relação ao produto "
                 + produto.getNome() + ", que tem o preço de R$ " + produto.getValor() + ".\n"
